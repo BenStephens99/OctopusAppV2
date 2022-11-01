@@ -1,0 +1,19 @@
+{
+  "name": "octopusappv2",
+  "version": "1.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenStephens99/OctopusAppV2.git"
+  },
+  "author": "Ben Stephens",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenStephens99/OctopusAppV2/issues"
+  },
+  "homepage": "https://github.com/BenStephens99/OctopusAppV2#readme"
+}
