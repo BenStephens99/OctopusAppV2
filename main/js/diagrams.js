@@ -1,0 +1,78 @@
+function createLineGraph(id, house) {
+
+    const electricGasColor = "rgba(41, 255, 45, 0.9)";
+    const gasGraphColor = "rgba(39, 140, 255, 0.9)";
+    
+    var electricValues = [];
+    var gasValues = [];
+    var datTimeValues = [];
+
+    try{
+          for (var i = 0; i <= house.electricData.length -1; i++) {
+        electricValues.push(house.electricData[i].consumption);
+        gasValues.push(house.gasData[i].consumption);
+        datTimeValues.push(house.electricData[i].interval_start.slice(0, 10));
+    }
+    } catch (err) {
+        console.log("MISSING DATA")
+        console.log(house);
+    }
+  
+
+    new Chart(id, {
+        type: "line",
+        data: {
+            labels: datTimeValues,
+            datasets: [{
+                label: "Electricity",
+                fill: false,
+                lineTension: 0,
+                backgroundColor: electricGasColor,
+                borderColor: electricGasColor,
+                data: electricValues,
+            },{
+                label: "Gas",
+                fill: false,
+                lineTension: 0,
+                backgroundColor: gasGraphColor,
+                borderColor: gasGraphColor,
+                data: gasValues,
+            }]
+        },
+        options: {
+            legend: {
+                display: true,
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '£',
+                        fontSize: '16',
+                        autoSkip: false,
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time / Date',
+                        fontSize: '16',
+                    }
+                }]
+            },
+            title: {
+                display: true,
+                text: house.address,
+                fontSize: 16
+            },
+        }
+    });
+}
+
+function createStatusBox (){
+    
+}
+
