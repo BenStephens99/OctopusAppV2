@@ -20,7 +20,7 @@ class House {
         this.gasData = [];
     }
 
-    getData(returnData) {
+    getData(period, returnData) {
         let house = this;
         let recievedElectData = false;
         let recievedGasData = false;
@@ -40,9 +40,9 @@ class House {
                     username: "sk_live_wTNi3svVwlDYAA5tdDO22c9X",
                     password: ":",
                     data: {
-                        period_from: "2022-06-01T00:00:00+01:00",
+                        period_from: period.from,
                         order_by: "period",
-                        group_by: "month"
+                        group_by: period.group
                     },
                     success: function (res) {
                         switch (i) {

@@ -6,7 +6,7 @@ const FlexOctv2 = {
 }
 
 const BN3_3WQ = new House(
-    "BN3-3WQ",
+    "BN3_3WQ",
     "88 CLARENDON ROAD", 
     FlexOctv2,
     "1900010392943", 
@@ -17,7 +17,7 @@ const BN3_3WQ = new House(
 const Clarendon_Road_88 = [BN3_3WQ];
 
 const BN2_3JB = new House(
-    "BN2-3JB",
+    "BN2_3JB",
     "13 INVERNESS ROAD", 
     FlexOctv2,
     "1900013399835", 
@@ -28,7 +28,7 @@ const BN2_3JB = new House(
 const Inverness_Road_13 = [BN2_3JB];
 
 const BN1_5DQ = new House(
-    "BN1-5DQ",
+    "BN1_5DQ",
     "3 OLD SHOREHAM ROAD", 
     FlexOctv2,
     "1900005374710", 
@@ -39,7 +39,7 @@ const BN1_5DQ = new House(
 const Old_Shoreham_Road_3 = [BN1_5DQ];
 
 const BN1_7GD = new House(
-    "BN1-7GD",
+    "BN1_7GD",
     "86 ROEDALE ROAD", 
     FlexOctv2,
     "1900016376895", 

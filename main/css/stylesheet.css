@@ -1,18 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 html {
     height: 100vh;
     width: 100%;
-    font-family: 'Raleway', sans-serif; 
-    font-size: 1.3em;
-    color: white;
+    font-family: 'Roboto', monospace; 
+    font-size: 1.2em;
+    color: rgb(0, 0, 0);
 }
 
 body {
     width: 100%;
     display: flex;
     margin: 0;
-    background-color: rgb(248, 248, 248);
+    background-color: rgb(57, 57, 57);
+    color: white;
 }
 
 header {
@@ -21,10 +21,15 @@ header {
     max-width: 250px;
     height: 100vh;
     overflow-y: scroll;
-    background-color: white;
+    background-color: rgb(67, 66, 66);
+    color: white;
 }
 ::-webkit-scrollbar {
     width: 0px;
+}
+
+#pageHeader {
+    text-align: center;
 }
 
 header nav {
@@ -34,11 +39,11 @@ header nav {
 
 header nav li {
     list-style: none;
-    border-left: 5px solid white;
+    border-left: 5px solid rgb(67, 66, 66);
 }
 
 header nav li:hover {
-    border-left: 5px solid rgb(255, 0, 0);
+    border-left: 5px solid red;
 }
 
 header nav li {
@@ -49,7 +54,7 @@ header nav li {
 }
 
 header nav li a {
-    color: black;
+    color: white;
     text-decoration: none;
     padding: 0.5em;
 }
@@ -75,7 +80,7 @@ main {
 
 
 .graphContainer {
-    background-color: white;
+    background-color: rgb(95, 95, 95);
     border-radius: 0.5em;
     width: 750px;
     margin: 1em;
@@ -87,7 +92,7 @@ main {
     margin: 1em;
     display: flex;
     flex-wrap: wrap;
-    background-color: white;
+    background-color: rgb(95, 95, 95);
     border-radius: 0.5em;
     padding: 1em;
 }
@@ -96,6 +101,7 @@ main {
     width: 100%;
     margin: 0;
     margin-bottom: 1em;
+    font-weight: 400;
 }
 
 .dataBox {
@@ -115,9 +121,14 @@ main {
 
 
 .gasCol {
-    color: rgb(39, 140, 255);
+    color: rgb(90, 165, 251);
 }
 
 .elecCol {
     color: rgb(41, 255, 45);
+}
+
+img {
+    background-color: white;
+    border-radius: 12px;
 }

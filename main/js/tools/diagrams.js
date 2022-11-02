@@ -73,6 +73,6 @@ function createLineGraph(id, house) {
 }
 
 function createStatusBox (house){
-    document.getElementById('graphs').innerHTML += '<div class="statusBox"><h4>'+ house.address +'</h4> <div class="dataBox"><p class="gasCol">200</p><p>Gas:</p></div> <div class="dataBox"><p class="elecCol">200</p><p>Electric:</p></div></div>'
+    document.getElementById('graphs').innerHTML += '<div class="statusBox"><h4>'+ house.address +'</h4> <div class="dataBox"><p>'+ addAllValues(house.gasData) +'</p><p class="gasCol">Gas:</p></div> <div class="dataBox"><p>'+ addAllValues(house.electricData) +'</p><p class="elecCol">Electric:</p></div></div>'
 }
 
