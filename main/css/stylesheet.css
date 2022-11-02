@@ -44,6 +44,11 @@ header nav li {
 
 header nav li:hover {
     border-left: 5px solid red;
+    cursor: pointer;
+}
+
+#pageNav {
+    font-size: smaller;
 }
 
 header nav li {
