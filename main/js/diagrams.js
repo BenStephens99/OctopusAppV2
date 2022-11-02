@@ -1,6 +1,6 @@
 function createLineGraph(id, house) {
 
-    const electricGasColor = "rgba(41, 255, 45, 0.9)";
+    const electricGraphColor = "rgba(41, 255, 45, 0.9)";
     const gasGraphColor = "rgba(39, 140, 255, 0.9)";
     
     var electricValues = [];
@@ -27,8 +27,8 @@ function createLineGraph(id, house) {
                 label: "Electricity",
                 fill: false,
                 lineTension: 0,
-                backgroundColor: electricGasColor,
-                borderColor: electricGasColor,
+                backgroundColor: electricGraphColor,
+                borderColor: electricGraphColor,
                 data: electricValues,
             },{
                 label: "Gas",
@@ -72,7 +72,7 @@ function createLineGraph(id, house) {
     });
 }
 
-function createStatusBox (){
-    
+function createStatusBox (house){
+    document.getElementById('graphs').innerHTML += '<div class="statusBox"><h4>'+ house.address +'</h4> <div class="dataBox"><p class="gasCol">200</p><p>Gas:</p></div> <div class="dataBox"><p class="elecCol">200</p><p>Electric:</p></div></div>'
 }
 

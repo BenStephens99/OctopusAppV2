@@ -49,4 +49,4 @@ const BN1_7GD = new House(
     );
 const Roedale_Road_86 = [BN1_7GD];
 
-const allHouses = [BN3_3WQ, BN2_3JB]
+const allHouses = [BN3_3WQ, BN2_3JB, BN1_5DQ, BN1_7GD]
