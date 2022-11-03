@@ -1,6 +1,6 @@
 const FlexOctv2 = {
-    kwhElect: 0.2808,
-    standElect:  0.3942,
+    kwhElec: 0.2808,
+    standElec:  0.3942,
     kwhGas: 0.0697,
     standGas: 0.2592
 }

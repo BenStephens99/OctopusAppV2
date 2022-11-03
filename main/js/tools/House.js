@@ -16,11 +16,13 @@ class House {
         this.mprn = mprn;
         this.gSerialNum = gSerialNum;
 
+        this.dataPeriod;
         this.electricData = [];
         this.gasData = [];
     }
 
     getData(period, returnData) {
+        this.dataPeriod = period.group;
         let house = this;
         let recievedElectData = false;
         let recievedGasData = false;
@@ -94,7 +96,6 @@ class House {
             nonMissingData = this.electricData;
         }
         missingData.push(new data("No Data", nonMissingData[nonMissingData.length-1].interval_start, nonMissingData[nonMissingData.length-1].interval_end))
-        console.log(this)
     }
 
 }

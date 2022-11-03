@@ -15,7 +15,7 @@ function getFullDateYesterday(num) {
     return lastWeekDate + "T00:00:00";
 }
 
-function getFullLastWeek(num) {
+function getFullDateLastWeek(num) {
     date = new Date();
     date.setDate(date.getDate() - (7 * num))
     var lastWeekDate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
@@ -64,32 +64,26 @@ function nameOfMonth(month) {
     return days[month-1];
 }
 
-const live = {
-    from: getFullDateYesterday(0),
-    group: "",
-}
-
-const hourly = {
+const yesterday = {
     from: getFullDateYesterday(1),
     group: "hour",
+    expected: 24,
 }
 
-const daily = {
-    from: getFullLastWeek(1),
+const past7Days = {
+    from: getFullDateLastWeek(1),
     group: "day",
+    expected: 7,
 }
 
-const weekly = {
-    from: getFullDateLastMonth(2),
-    group: "week",
+const thisMonth = {
+    from: getFirstDateLastMonth(0),
+    group: "day",
+    expected: parseInt(getFullDateYesterday(1).slice(8,10)),
 }
 
-const monthly = {
-    from: getFullDateLastYear(1),
+const past6Months = {
+    from: getFirstDateLastMonth(6),
     group: "month",
-}
-
-const quarterly = {
-    from: "",
-    group: "quarter"
+    expected: parseInt(getFullDateYesterday(1).slice(8,10)),
 }
