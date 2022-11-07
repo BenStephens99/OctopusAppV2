@@ -98,12 +98,9 @@ class House {
         for (var i = 0; i < exp; i++) {
             if (res[i] != null) {
                 if (res[i].interval_start.slice(0, 10) !== this.dateToGet(i).slice(0, 10)) {
-                    console.log(this.dateToGet(i).slice(0, 10) + "!=" + res[i].interval_start.slice(0, 10))
-                    console.log(i)
                     res.splice(i, 0, new data(0, this.dateToGet(i), this.dateToGet(i)))
                     valuesAdded++;
                     if (valuesAdded >= valuesToAdd) {
-                        console.log("all values added")
                         return;
                     }
                 }
