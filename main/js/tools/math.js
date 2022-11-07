@@ -13,14 +13,13 @@ function addAllValues (values) {
 function electToPound(house) {
     var electValues = [];
     for (var i = 0; i < house.electricData.length; i++) {
-        console.log(electValues)
         electValues.push(roundNumber(house.electricData[i].consumption * house.tariff.kwhElec));
     }
 
     var standingValues = [];
     if (house.dataPeriod === "day") {
         for (var i = 0; i < electValues.length; i++) {
-            standingValues.push(house.tariff.standElec / 24);
+            standingValues.push(house.tariff.standElec);
         }
     } else if (house.dataPeriod === "week") {
         for (var i = 0; i < electValues.length; i++) {
@@ -33,12 +32,9 @@ function electToPound(house) {
         }
     }
 
-    console.log(house.dataPeriod);
-    console.log(standingValues);
-
     for(var i = 0; i < electValues.length; i++) {
         electValues[i] += standingValues[i];
-        electValues[i] = roundNumber(electValues[i]);
+        electValues[i] = roundNumber(electValues[i] * 1.05);
     }
 
     return electValues;
