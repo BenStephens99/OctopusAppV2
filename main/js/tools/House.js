@@ -92,8 +92,12 @@ class House {
         var valuesAdded = 0;
 
         this.dateToGet = function (num) {
-            if (this.dataPeriod.group === "day") { return getFullDateYesterday(num) }
-            if (this.dataPeriod.group === "month") { return getFirstDateLastMonth(num) }
+            if (this.dataPeriod.group === "day") { return getFullDateYesterday(num); }
+            else if (this.dataPeriod.group === "week") { return getFullDateLastWeek(num); }
+            else if (this.dataPeriod.group === "month") { return getFirstDateLastMonth(num); }
+            else if (this.dataPeriod.group === "year") { return getFullDateLastYear(num); }
+            else { return; }
+
         }
         for (var i = 0; i < exp; i++) {
             if (res[i] != null) {
@@ -112,50 +116,9 @@ class House {
     }
 }
 
-
-
 function data(consumption, interval_start, interval_end) {
     this.consumption = consumption;
     this.interval_start = interval_start;
     this.interval_end = interval_end;
 }
 
-/*
-const dummyHouse = {
-    data: [
-        new data(1, getFullDateYesterday(1), getFullDateYesterday(1)),
-        new data(1, getFullDateYesterday(2), getFullDateYesterday(2)),
-        new data(1, getFullDateYesterday(4), getFullDateYesterday(4)),
-        new data(1, getFullDateYesterday(6), getFullDateYesterday(6)),
-
-    ]
-};
-
-function fixData(res, exp) {
-    var valuesToAdd = exp - res.length;
-    var valuesAdded = 0;
-    this.dateToGet = function (num) {
-        return getFullDateYesterday(num)
-    }
-    for (var i = 0; i < exp; i++) {
-        if (res[i] != null) {
-            if (res[i].interval_start.slice(0, 10) !== this.dateToGet(i).slice(0, 10)) {
-                console.log(this.dateToGet(i).slice(0, 10) + "!=" + res[i].interval_start.slice(0, 10))
-                console.log(i)
-                res.splice(i, 0, new data(0, this.dateToGet(i), this.dateToGet(i)))
-                valuesAdded++;
-                if (valuesAdded >= valuesToAdd) {
-                    console.log("all values added")
-                    return;
-                }
-            }
-        } else {
-            console.log("extra data")
-            res.push(new data(0, this.dateToGet(i), this.dateToGet(i)))
-        }
-    }
-}
-
-fixData(dummyHouse.data, 14);
-console.log(dummyHouse.data);
-*/
