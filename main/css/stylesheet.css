@@ -99,6 +99,7 @@ main {
     height: 100vh;
     overflow-y: scroll;
     margin: auto;
+    transition: 0.5s;
 }
 
 #graphs {
@@ -163,4 +164,63 @@ main {
 img {
     background-color: white;
     border-radius: 12px;
+}
+
+form {
+    width: 50%;
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+#buttonHolder {
+    width: 200px;
+    margin: 1em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#buttonHolder button {
+    width: 100%;
+    padding: 0.5em;
+    background-color: rgb(95, 95, 95);
+    color: white;
+    border: none;
+    font-size: inherit;
+    border-radius: 0.5em;
+}
+
+
+#buttonHolder button:hover {
+    cursor: pointer;
+    background-color: rgb(67, 66, 66);
+}
+
+#newHouseForm{
+    display: none;
+    background-color: rgb(95, 95, 95);
+    padding: 1em;
+    border-radius: 0.5em;
+    opacity: 0;
+    animation-delay: 0s;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+label {
+    width: 100%;
+}
+
+input {
+    width: 95%;
+    margin-bottom: 20px;
+    background-color: rgb(67, 66, 66);
+    border-radius: 1em;
+    color: inherit;
+    font-size: inherit;
+    padding: 5px;
+    border: none;
 }

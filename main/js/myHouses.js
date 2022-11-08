@@ -5,7 +5,7 @@ var scaleTitle = document.getElementById('scaleTitle')
 addHousesToNav();
 
 for (var i = 0; i <= allHouses.length - 1; i++) {
-    allHouses[i].getData(thisMonth, function(house) {
+    allHouses[i].getData(thisMonth, function (house) {
         createStatusBox(house);
     });
 }
@@ -45,13 +45,18 @@ function changeView(view) {
 function capitaliseFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
-function myFunction() {
-    let text;
-    let person = prompt("Please enter your name:", "Harry Potter");
-    if (person == null || person == "") {
-      text = "User cancelled the prompt.";
+function addNewHouse() {
+    let postcode = document.forms["newHouseForm"]["fname"].value;
+}
+
+
+var formIsOpen = false;
+function showForm() {
+    if (formIsOpen === false) {
+        document.getElementById("newHouseForm").style.display = "block";
+        formIsOpen = true;
     } else {
-      text = "Hello " + person + "! How are you today?";
+        document.getElementById("newHouseForm").style.display = "none";
+        formIsOpen = false;
     }
-    document.getElementById("demo").innerHTML = text;
-  }
+}
