@@ -128,9 +128,6 @@ main {
     padding: 1em;
 }
 
-.statusBox:hover {
-    cursor: pointer;
-}
 
 .statusBox h4 {
     width: 100%;

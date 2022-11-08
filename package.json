@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/BenStephens99/OctopusAppV2#readme",
   "dependencies": {
-    "electron": "^21.2.1"
+    "electron": "^21.2.1",
+    "jquery": "^3.6.1"
   }
 }

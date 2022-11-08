@@ -33,7 +33,7 @@ class House {
         ]
 
         for (let i = 0; i < urls.length; i++) {
-            $.ajax
+            jq.ajax
                 ({
 
                     type: "GET",
@@ -87,7 +87,6 @@ class House {
     }
 
     fixMissingData(res, exp) {
-        console.log(res);
         var valuesToAdd = exp - res.length;
         var valuesAdded = 0;
 

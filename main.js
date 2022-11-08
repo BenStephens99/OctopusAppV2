@@ -6,7 +6,9 @@ function createWindow () {
     width: 1050,
     height: 700,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
     },
     icon: "./main/images/Cicon.ico"
   })
@@ -29,4 +31,5 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
 

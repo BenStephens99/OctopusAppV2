@@ -80,6 +80,15 @@ function getMonthsSince(date) {
     return difference + 1;
 }
 
+function getNextDay(date) {
+    nextDay = new Date();
+    nextDay.setDate(getDayFromISO(date) + 1);
+    nextDay.setMonth(getMonthFromISO(date));
+    nextDay.setFullYear(getYearFromISO(date));
+
+    return convertToISO(nextDay);
+} 
+
 function getDayFromISO(date){ return parseInt(date.slice(8,10))}
 function getMonthFromISO(date){ return parseInt(date.slice(5,7)) - 1}
 function getYearFromISO(date){ return parseInt(date.slice(0,4))}
