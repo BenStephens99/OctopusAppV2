@@ -1,4 +1,5 @@
 var currentProperty = '';
+var period = past6Months;
 var pageHeader = document.getElementById('pageHeader')
 var scaleTitle = document.getElementById('scaleTitle')
 
@@ -27,27 +28,32 @@ function changeProperty(id) {
     try {
         document.getElementById(currentProperty.postcode + '_nav').classList.remove("selectedli");
     } catch (err) {
-        console.log("Current Property is empty")
     }
+
     currentProperty = allHouses[id];
     document.getElementById(currentProperty.postcode + '_nav').classList.add("selectedli");
     pageHeader.innerHTML = currentProperty.address;
+    drawGraphs();
+}
+
+function drawGraphs() {
     addGraphDiv(currentProperty.postcode);
     addGraphDiv("tariffGraph")
-    currentProperty.getData(past6Months, function (house) {
-        createGasAndElectGraph(house);
+    currentProperty.getData(period, function (house) {
+    createGasAndElectGraph(house);
     });
     createTariffGraph(currentProperty);
 }
 
-function changeView(view) {
-    if (currentProperty === null) {
-        alert("Select a house");
-    } else {
-        document.getElementById('graphs').innerHTML = '';
-        period = view;
-        createGraphs();
+function changePeriod(per, id) {
+    var selected = document.getElementsByClassName("selectedButton"); 
+    if(selected.length !== 0) {
+        selected[0].classList.remove("selectedButton");
     }
+    id.classList.add("selectedButton");
+    document.getElementById('graphs').innerHTML = '';
+    period = per;
+    drawGraphs();
 }
 
 function capitaliseFirstLetter(string) {

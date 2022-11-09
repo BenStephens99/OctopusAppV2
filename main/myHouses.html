@@ -29,10 +29,10 @@
         </div>
 
         <ul id="scaleButtons">
-            <li><button id="hour" onclick="changeView(yesterday)">Yesterday</button></li>
-            <li><button id="day" onclick="changeView(past7days)">Past 7 days</button></li>
-            <li><button id="week" onclick="changeView(past8Weeks)">Weekly</button></li>
-            <li><button id="month" onclick="changeView(past6Months)">Monthly</button></li>
+            <li><button id="hourButton" onclick="changePeriod(yesterday, hourButton)">Yesterday</button></li>
+            <li><button id="dayButton" onclick="changePeriod(past7Days, dayButton)">Past 7 days</button></li>
+            <li><button id="weekButton" onclick="changePeriod(past8Weeks, weekButton)">Last 8 Weeks</button></li>
+            <li><button id="yearButton" onclick="changePeriod(pastYear, yearButton)">Last 12 Months</button></li>
         </ul>
 
         <form id="newHouseForm" name="newHouseForm" onsubmit="addNewHouse()">

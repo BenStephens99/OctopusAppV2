@@ -44,6 +44,7 @@ function getUnitPriceElect(tariff, period) {
                 period_to: getNextDay(period),
             },
             success: function (res) {
+                
                 dataToReturn = res.results[0].value_exc_vat;
             }
         })

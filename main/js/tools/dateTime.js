@@ -74,17 +74,20 @@ function getMonthsSince(date) {
     dateSince.setMonth(getMonthFromISO(date));
     dateSince.setFullYear(getYearFromISO(date));
 
-    var difference = (getYearFromISO(convertToISO(todaysDate)) - getYearFromISO(convertToISO(dateSince))) * 12
-    difference += (getMonthFromISO(convertToISO(todaysDate)) - getMonthFromISO(convertToISO(dateSince)))
+    var difference = (getYearFromISO(convertToISO(todaysDate)) - getYearFromISO(convertToISO(dateSince))) * 12;
+    difference += (getMonthFromISO(convertToISO(todaysDate)) - getMonthFromISO(convertToISO(dateSince)));
 
     return difference + 1;
 }
 
 function getNextDay(date) {
     nextDay = new Date();
-    nextDay.setDate(getDayFromISO(date) + 1);
+
     nextDay.setMonth(getMonthFromISO(date));
+    nextDay.setDate(getDayFromISO(date));
     nextDay.setFullYear(getYearFromISO(date));
+
+    nextDay.setDate(nextDay.getDate() + 1)
 
     return convertToISO(nextDay);
 } 
@@ -97,9 +100,11 @@ function getFirstDateOfLastXMonths(x){
     return datesToReturn;
 }
 
+function getTimeFromISO(date){return}
 function getDayFromISO(date){ return parseInt(date.slice(8,10))}
-function getMonthFromISO(date){ return parseInt(date.slice(5,7)) - 1}
+function getMonthFromISO(date){ return parseInt(date.slice(5,7))-1}
 function getYearFromISO(date){ return parseInt(date.slice(0,4))}
+
 
 function convertToISO(date) {
     var ISODate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
@@ -108,8 +113,14 @@ function convertToISO(date) {
 
 function daysInMonth(month) {
     const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] 
-    return days[month-1];
+    if(month === 0) {
+        return days[11];
+    } else {
+        return days[month-1]
+    }
 }
+
+console.log(daysInMonth(1))
 
 function nameOfMonth(month) {
     const days = ["January", "February", "March", "April",
@@ -132,7 +143,17 @@ const thisMonth = {
     group: "day",
 }
 
+const past8Weeks = {
+    from: getFullDateLastWeek(8),
+    group: "week",
+}
+
 const past6Months = {
     from: getFirstDateLastMonth(6),
+    group: "month",
+}
+
+const pastYear = {
+    from: getFullDateLastYear(1),
     group: "month",
 }

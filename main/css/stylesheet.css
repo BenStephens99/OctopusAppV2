@@ -222,7 +222,7 @@ form {
     box-shadow: 0 0 20px rgb(44, 44, 44);
 }
 
-#newHouseForm{
+#newHouseForm {
     display: none;
     background-color: rgb(95, 95, 95);
     padding: 1em;
@@ -291,4 +291,8 @@ input {
 #scaleButtons button:hover {
     cursor: pointer;
     box-shadow: 0 0 20px rgb(44, 44, 44);
+}
+
+#scaleButtons .selectedButton {
+    border: 1px solid white;
 }

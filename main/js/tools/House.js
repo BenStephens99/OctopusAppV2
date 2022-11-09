@@ -97,8 +97,13 @@ class House {
 
     checkMissingData(res) {
         var expectedData = 0;
-        if (this.dataPeriod.group === "day") { expectedData = getDaysSince(this.dataPeriod.from) };
-        if (this.dataPeriod.group === "month") { expectedData = getMonthsSince(this.dataPeriod.from) };
+        if (this.dataPeriod.group === "day") {
+            expectedData = getDaysSince(this.dataPeriod.from)
+        } else if (this.dataPeriod.group === "month") {
+            expectedData = getMonthsSince(this.dataPeriod.from)
+        } else {
+            return res;
+        }
         if (res.length >= expectedData) {
             return res;
         } else {

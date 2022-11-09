@@ -10,25 +10,28 @@ function createGasAndElectGraph(house) {
     var electricValues;
     var gasValues;
 
-    if (house.electricData !== 0) {
+    if (house.electricData.length !== 0) {
         electricValues = electToPound(house);
     }
     if (house.gasData.length !== 0) {
-        console.log(house.gasData)
         gasValues = gasToPound(house);
     }
 
     var dateTimeValues = [];
 
-    if (house.electricData != null) {
+
+    if (house.electricData.length !== 0) {
         for (var i = 0; i <= house.electricData.length - 1; i++) {
             dateTimeValues.push(house.electricData[i].interval_start.slice(0, 10));
         }
-    } else if (house.gasData != null) {
+    } else if (house.gasData !== 0) {
         for (var i = 0; i <= house.gasData.length - 1; i++) {
             dateTimeValues.push(house.gasData[i].interval_start.slice(0, 10));
         }
     }
+
+  
+
 
     new Chart(house.postcode, {
         type: "line",
@@ -83,7 +86,7 @@ function createGasAndElectGraph(house) {
 }
 
 function createTariffGraph(house) {
-    var dateTimeValues = getFirstDateOfLastXMonths(7);
+    var dateTimeValues = getFirstDateOfLastXMonths(12);
     var electTariffValues = [];
     var gasTariffValues = [];
 
@@ -142,7 +145,7 @@ function createTariffGraph(house) {
             },
             title: {
                 display: true,
-                text: house.tariff.productCode,
+                text: 'This Tariff('+house.tariff.productCode+') Last 12 Months',
                 fontSize: 16
             },
         }
