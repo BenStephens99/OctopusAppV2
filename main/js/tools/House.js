@@ -68,6 +68,27 @@ class House {
                                     break;
                                 }
                         }
+                    },
+                    error: function () {
+                        switch (i) {
+                            case 0:
+                                recievedGasData = true;
+                                if (recievedElectData) {
+                                    returnData(house);
+                                    return;
+                                } else {
+                                    break;
+                                }
+
+                            case 1:
+                                recievedElectData = true;
+                                if (recievedGasData) {
+                                    returnData(house);
+                                    return;
+                                } else {
+                                    break;
+                                }
+                        }
                     }
                 });
         }

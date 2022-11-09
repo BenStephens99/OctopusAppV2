@@ -89,6 +89,14 @@ function getNextDay(date) {
     return convertToISO(nextDay);
 } 
 
+function getFirstDateOfLastXMonths(x){
+    let datesToReturn = [];
+    for (var i = 0; i < x; i++) {
+        datesToReturn.push(getFirstDateLastMonth(i));
+    }
+    return datesToReturn;
+}
+
 function getDayFromISO(date){ return parseInt(date.slice(8,10))}
 function getMonthFromISO(date){ return parseInt(date.slice(5,7)) - 1}
 function getYearFromISO(date){ return parseInt(date.slice(0,4))}

@@ -1,17 +1,19 @@
-function roundNumber (num) {
+const { copyFileSync } = require("original-fs");
+
+function roundNumber(num) {
     return Math.round(parseFloat(num) * 100) / 100;
 }
 
-function addAllValues (values) {
+function addAllValues(values) {
     var returnValue = 0;
-    for(var i = 0; i < values.length; i++) {
+    for (var i = 0; i < values.length; i++) {
         returnValue += values[i];
     }
     return roundNumber(returnValue);
 }
 
 function electToPound(house) {
- 
+
     var electValues = [];
     for (var i = 0; i < house.electricData.length; i++) {
         electValues.push(roundNumber(house.electricData[i].consumption * getUnitPriceElect(house.tariff, house.electricData[i].interval_start)));
@@ -30,19 +32,18 @@ function electToPound(house) {
         for (var i = 0; i < electValues.length - 1; i++) {
             standingValues.push(getStandingPriceElect(house.tariff, house.electricData[i].interval_start) * daysInMonth(getMonthFromISO(house.electricData[i].interval_start)));
         }
-        standingValues.push(getStandingPriceElect(house.tariff, house.electricData[electValues.length -1].interval_start) * (getDayFromISO(house.electricData[electValues.length -1].interval_start) + 1));
-
+        standingValues.push(getStandingPriceElect(house.tariff, house.electricData[electValues.length - 1].interval_start) * (getDayFromISO(house.electricData[electValues.length - 1].interval_end)));
     }
-    console.log(house.electricData)
-    console.log(standingValues)
 
-    for(var i = 0; i < electValues.length; i++) {
+    for (var i = 0; i < electValues.length; i++) {
         electValues[i] += standingValues[i];
         electValues[i] = roundNumber(electValues[i] * 1.05);
 
     }
     return electValues;
 }
+
+
 
 function gasToPound(house) {
     var gasValues = [];
@@ -60,13 +61,13 @@ function gasToPound(house) {
         }
 
     } else if (house.dataPeriod.group === "month") {
-        for (var i = 0; i < gasValues.length -1; i++) {
+        for (var i = 0; i < gasValues.length - 1; i++) {
             standingValues.push(getStandingPriceGas(house.tariff, house.gasData[i].interval_start) * daysInMonth(getMonthFromISO(house.gasData[i].interval_start)));
         }
-        standingValues.push(getStandingPriceElect(house.tariff, house.gasData[gasValues.length -1].interval_start) * (getDayFromISO(house.gasData[gasValues.length -1].interval_start) + 1));
+        standingValues.push(getStandingPriceGas(house.tariff, house.gasData[gasValues.length - 1].interval_start) * (getDayFromISO(house.gasData[gasValues.length - 1].interval_end)));
     }
 
-    for(var i = 0; i < gasValues.length; i++) {
+    for (var i = 0; i < gasValues.length; i++) {
         gasValues[i] += standingValues[i];
         gasValues[i] = roundNumber(gasValues[i] * 1.05);
     }

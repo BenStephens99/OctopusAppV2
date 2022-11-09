@@ -11,9 +11,9 @@ html {
 body {
     width: 100%;
     display: flex;
-    margin: 0;
     background-color: rgb(57, 57, 57);
     color: white;
+    margin: 0;
 }
 
 header {
@@ -32,6 +32,9 @@ header {
 
 #pageHeader {
     text-align: center;
+    padding: 0;
+    margin: 0;
+    margin-top: 1em;
 }
 
 header nav {
@@ -98,16 +101,15 @@ header nav li a {
 main {
     height: 100vh;
     overflow-y: scroll;
-    margin: auto;
     transition: 0.5s;
+    width: 100%;
 }
 
 #graphs {
     width: 100%;
+    margin: auto;
     display: flex;
     flex-wrap: wrap;
-    padding-bottom: 1em;
-    margin: auto;
 }
 
 
@@ -115,18 +117,23 @@ main {
     background-color: rgb(95, 95, 95);
     border-radius: 0.5em;
     width: 750px;
-    margin: 1em;
+    margin: auto;
+    margin-bottom: 1em;
     padding: 1em;
+    box-shadow: 0 0 10px rgb(44, 44, 44);
 }
+
 
 .statusBox {
     width: 250px;
     margin: 1em;
     display: flex;
     flex-wrap: wrap;
+    position: relative;
     background-color: rgb(95, 95, 95);
     border-radius: 0.5em;
     padding: 1em;
+    box-shadow: 0 0 10px rgb(44, 44, 44);
 }
 
 
@@ -138,7 +145,7 @@ main {
 }
 
 .dataBox {
-    min-width: 100%;
+    min-width: 50%;
     margin-left: auto;
     margin-right: 0;
 }
@@ -152,6 +159,24 @@ main {
     text-align: right;
 }
 
+#deleteButton {
+    position: absolute;
+    left: 1.5em;
+    bottom: 1.5em;
+    border-radius: 0.5em;
+    background-color: rgb(67, 66, 66);
+    border: none;
+    color: inherit;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid rgb(67, 66, 66);
+}
+
+#deleteButton:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px rgb(130, 130, 130);
+}
 
 .gasCol {
     color: rgb(90, 165, 251);
@@ -178,6 +203,7 @@ form {
     margin: 1em;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 0 0 10px rgb(44, 44, 44);
 }
 
 #buttonHolder button {
@@ -188,12 +214,12 @@ form {
     border: none;
     font-size: inherit;
     border-radius: 0.5em;
+    border: 1px solid rgb(95, 95, 95);
 }
-
 
 #buttonHolder button:hover {
     cursor: pointer;
-    background-color: rgb(67, 66, 66);
+    box-shadow: 0 0 20px rgb(44, 44, 44);
 }
 
 #newHouseForm{
@@ -223,4 +249,46 @@ input {
     font-size: inherit;
     padding: 5px;
     border: none;
+}
+
+#submitButton {
+    margin: 0;
+    width: 50%;
+    border: 1px solid rgb(67, 66, 66);
+}
+
+#submitButton:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px rgb(173, 172, 172);
+}
+
+#scaleButtons {
+    width: 100%;
+    margin: auto;
+    padding: 0;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: center;
+}
+
+#scaleButtons li {
+    display: inline;
+    margin: 1em;
+}
+
+#scaleButtons button {
+    padding: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    background-color: rgb(95, 95, 95);
+    color: inherit;
+    border: 1px solid rgb(67, 66, 66);
+    border-radius: 1em;
+    font-size: 0.8em;
+    box-shadow: 0 0 10px rgb(44, 44, 44);
+}
+
+#scaleButtons button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 20px rgb(44, 44, 44);
 }

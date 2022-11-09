@@ -22,7 +22,13 @@ for (var i = 0; i < files.length; i++) {
 }
 
 function saveNewHouse(house) {
-    fs.writeFileSync(houseDir + house.postcode +'.json', JSON.stringify(house, null, 4))
+    fs.writeFileSync(houseDir + house.postcode +'.json', JSON.stringify(house, null, 4));
+    location.reload();
+}
+
+function removeHouseFile(house) {
+    fs.unlinkSync(houseDir + house.postcode +'.json');
+    location.reload();
 }
 
 function getUnitPriceElect(tariff, period) {

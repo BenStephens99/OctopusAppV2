@@ -14,7 +14,6 @@
         <img src="./images/cranmead-logo.svg" alt="cranmead-logo">
         <nav id="siteNav">
             <li><a href="index.html">Overview</a></li>
-            <li><a href="index.html">This Month</a></li>
             <li class="selected"><a href="myHouses.html">My Houses</a></li>
             <nav id="pageNav">
             </nav>
@@ -29,6 +28,13 @@
             <button onclick="showForm()">Add New House</button>
         </div>
 
+        <ul id="scaleButtons">
+            <li><button id="hour" onclick="changeView(yesterday)">Yesterday</button></li>
+            <li><button id="day" onclick="changeView(past7days)">Past 7 days</button></li>
+            <li><button id="week" onclick="changeView(past8Weeks)">Weekly</button></li>
+            <li><button id="month" onclick="changeView(past6Months)">Monthly</button></li>
+        </ul>
+
         <form id="newHouseForm" name="newHouseForm" onsubmit="addNewHouse()">
             <label for="postcode">Postcode:</label>
             <input type="text" name="postcode">
@@ -42,6 +48,7 @@
             <input type="text" name="mprn">
             <label for="eSerialNum">Gas Serial Number:</label>
             <input type="text" name="gSerialNum">
+            <input id="submitButton" type="submit" value="Add">
         </form>
 
         <div id="graphs">
