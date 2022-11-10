@@ -4,7 +4,7 @@ var day = String(date.getDate()).padStart(2, '0');
 var month = String(date.getMonth() + 1).padStart(2, '0')
 var year = date.getFullYear();
 
-const oneDay = 24 * 60 * 60 * 1000; 
+const oneDay = 24 * 60 * 60 * 1000;
 
 const testDate = "2022-01-01T00:00:00Z";
 
@@ -58,13 +58,26 @@ function getFirstDateLastYear(num) {
     return convertToISO(date);
 }
 
+function getPreviousMonth(prevDate){
+    date = new Date();
+    date.setDate(getDayFromISO(prevDate));
+    date.setMonth(getMonthFromISO(prevDate));
+    date.setFullYear(getYearFromISO(prevDate));
+
+    date.setMonth(date.getMonth() - 1);
+
+    return convertToISO(date).slice(0,7);
+}
+
+// console.log(getFirstDateLastMonth(11).slice(0,7))
+
 function getDaysSince(date) {
     todaysDate = new Date();
     dateSince = new Date();
     dateSince.setDate(getDayFromISO(date));
     dateSince.setMonth(getMonthFromISO(date));
     dateSince.setFullYear(getYearFromISO(date));
-    return Math.round(Math.abs((dateSince - todaysDate) / oneDay));;
+    return Math.round(Math.abs((dateSince - todaysDate) / oneDay) + 1);;
 }
 
 function getMonthsSince(date) {
@@ -86,13 +99,13 @@ function getNextDay(date) {
     nextDay.setMonth(getMonthFromISO(date));
     nextDay.setDate(getDayFromISO(date));
     nextDay.setFullYear(getYearFromISO(date));
-
     nextDay.setDate(nextDay.getDate() + 1)
 
     return convertToISO(nextDay);
-} 
+}
 
-function getFirstDateOfLastXMonths(x){
+
+function getFirstDateOfLastXMonths(x) {
     let datesToReturn = [];
     for (var i = 0; i < x; i++) {
         datesToReturn.push(getFirstDateLastMonth(i));
@@ -100,11 +113,12 @@ function getFirstDateOfLastXMonths(x){
     return datesToReturn;
 }
 
-function getTimeFromISO(date){return}
-function getDayFromISO(date){ return parseInt(date.slice(8,10))}
-function getMonthFromISO(date){ return parseInt(date.slice(5,7))-1}
-function getYearFromISO(date){ return parseInt(date.slice(0,4))}
+console.log(getFullDateLastWeek(0))
 
+function getTimeFromISO(date) { return parseInt(date.slice(11, 16)) }
+function getDayFromISO(date) { return parseInt(date.slice(8, 10)) }
+function getMonthFromISO(date) { return parseInt(date.slice(5, 7) - 1)}
+function getYearFromISO(date) { return parseInt(date.slice(0, 4)) }
 
 function convertToISO(date) {
     var ISODate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
@@ -112,20 +126,25 @@ function convertToISO(date) {
 }
 
 function daysInMonth(month) {
-    const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] 
-    if(month === 0) {
-        return days[11];
-    } else {
-        return days[month-1]
-    }
+    const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    return days[month]
 }
-
-console.log(daysInMonth(1))
 
 function nameOfMonth(month) {
     const days = ["January", "February", "March", "April",
-     "May", "June", "July", "August", "September", "October", "November", "December"] 
-    return days[month-1];
+        "May", "June", "July", "August", "September", "October", "November", "December"]
+        return days[month]
+}
+
+function nameOfTime(time) {
+    const times = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am",
+        "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm",
+        "10pm", "11pm"]
+
+    if(time === 24) {
+        return "12am";
+    }
+    return times[time];
 }
 
 const yesterday = {
@@ -152,6 +171,7 @@ const past6Months = {
     from: getFirstDateLastMonth(6),
     group: "month",
 }
+
 
 const pastYear = {
     from: getFullDateLastYear(1),

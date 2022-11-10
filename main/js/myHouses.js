@@ -1,5 +1,5 @@
 var currentProperty = '';
-var period = past6Months;
+var period = pastYear;
 var pageHeader = document.getElementById('pageHeader')
 var scaleTitle = document.getElementById('scaleTitle')
 
@@ -40,14 +40,15 @@ function drawGraphs() {
     addGraphDiv(currentProperty.postcode);
     addGraphDiv("tariffGraph")
     currentProperty.getData(period, function (house) {
-    createGasAndElectGraph(house);
+        createGasAndElectGraph(house);
+        createTariffGraph(house);
     });
-    createTariffGraph(currentProperty);
+    
 }
 
 function changePeriod(per, id) {
-    var selected = document.getElementsByClassName("selectedButton"); 
-    if(selected.length !== 0) {
+    var selected = document.getElementsByClassName("selectedButton");
+    if (selected.length !== 0) {
         selected[0].classList.remove("selectedButton");
     }
     id.classList.add("selectedButton");

@@ -1,3 +1,5 @@
+const { data } = require("jquery");
+
 class House {
     constructor(
         postcode, address,
@@ -43,10 +45,10 @@ class House {
                     password: ":",
                     data: {
                         period_from: period.from,
-                        order_by: "period",
                         group_by: period.group
                     },
                     success: function (res) {
+                        console.log(house);
                         switch (i) {
                             case 0:
                                 recievedGasData = true;
@@ -69,27 +71,6 @@ class House {
                                 }
                         }
                     },
-                    error: function () {
-                        switch (i) {
-                            case 0:
-                                recievedGasData = true;
-                                if (recievedElectData) {
-                                    returnData(house);
-                                    return;
-                                } else {
-                                    break;
-                                }
-
-                            case 1:
-                                recievedElectData = true;
-                                if (recievedGasData) {
-                                    returnData(house);
-                                    return;
-                                } else {
-                                    break;
-                                }
-                        }
-                    }
                 });
         }
 
@@ -97,14 +78,21 @@ class House {
 
     checkMissingData(res) {
         var expectedData = 0;
-        if (this.dataPeriod.group === "day") {
+
+        if (this.dataPeriod.group === "hour") {
+            return res;
+        } else if (this.dataPeriod.group === "day") {
             expectedData = getDaysSince(this.dataPeriod.from)
+        } else if (this.dataPeriod.group === "week") {
+            expectedData = getMonthsSince(this.dataPeriod.from)
         } else if (this.dataPeriod.group === "month") {
             expectedData = getMonthsSince(this.dataPeriod.from)
         } else {
             return res;
         }
-        if (res.length >= expectedData) {
+
+
+        if (res.length === expectedData) {
             return res;
         } else {
             this.fixMissingData(res, expectedData)
@@ -116,32 +104,43 @@ class House {
         var valuesToAdd = exp - res.length;
         var valuesAdded = 0;
 
-        this.dateToGet = function (num) {
-            if (this.dataPeriod.group === "day") { return getFullDateYesterday(num); }
-            else if (this.dataPeriod.group === "week") { return getFullDateLastWeek(num); }
-            else if (this.dataPeriod.group === "month") { return getFirstDateLastMonth(num); }
-            else if (this.dataPeriod.group === "year") { return getFullDateLastYear(num); }
+        this.expectedLastData = function () {
+            if (this.dataPeriod.group === "hour") { return; }
+            else if (this.dataPeriod.group === "day") { return getFullDateYesterday(0); }
+            else if (this.dataPeriod.group === "month") { return getFirstDateLastMonth(0); }
             else { return; }
-
         }
+
+        if (this.expectedLastData() !== res[0].interval_start) {
+            res.unshift(new Data(0, this.expectedLastData(), this.expectedLastData()))
+            valuesAdded++;
+        }
+
+        this.expectedPreviousData = function (num) {
+            if (this.dataPeriod.group === "hour") { return; }
+            else if (this.dataPeriod.group === "day") { return getFullDateYesterday(num); }
+            else if (this.dataPeriod.group === "month") { return getFirstDateLastMonth(num); }
+            else { return; }
+        }
+        
         for (var i = 0; i < exp; i++) {
-            if (res[i] != null) {
-                if (res[i].interval_start.slice(0, 10) !== this.dateToGet(i).slice(0, 10)) {
-                    res.splice(i, 0, new data(0, this.dateToGet(i), this.dateToGet(i)))
+            if (res[i] == null) {
+                res.push(new Data("No Data", this.expectedPreviousData(i), this.expectedPreviousData(i)))
+            } else {
+                if (res[i].interval_start.slice(0, 10) !== this.expectedPreviousData(i).slice(0,10)) {
+                    res.splice(i, 0, new Data(0, this.expectedPreviousData(i), this.expectedPreviousData(i)));
                     valuesAdded++;
-                    if (valuesAdded >= valuesToAdd) {
+                    if (valuesAdded === valuesToAdd) {
                         return;
                     }
                 }
-            } else {
-                console.log("extra data")
-                res.push(new data(0, this.dateToGet(i), this.dateToGet(i)))
             }
         }
+
     }
 }
 
-function data(consumption, interval_start, interval_end) {
+function Data(consumption, interval_start, interval_end) {
     this.consumption = consumption;
     this.interval_start = interval_start;
     this.interval_end = interval_end;

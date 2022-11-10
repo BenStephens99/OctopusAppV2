@@ -13,7 +13,6 @@ function addAllValues(values) {
 }
 
 function electToPound(house) {
-
     var electValues = [];
     if (house.dataPeriod.group === "hour") {
         var unitPrice = roundNumber(getUnitPriceElect(house.tariff, house.electricData[0].interval_start))
@@ -41,13 +40,12 @@ function electToPound(house) {
         for (var i = 0; i < electValues.length; i++) {
             standingValues.push(getStandingPriceElect(house.tariff, house.electricData[i].interval_start) * 7);
         }
-
     } else if (house.dataPeriod.group === "month") {
-        for (var i = 0; i < electValues.length - 1; i++) {
+        standingValues.push(getStandingPriceElect(house.tariff, house.electricData[0].interval_start) * (getDayFromISO(house.electricData[0].interval_end)));
+        for (var i = 1; i < electValues.length; i++) {
             standingValues.push(getStandingPriceElect(house.tariff, house.electricData[i].interval_start) * daysInMonth(getMonthFromISO(house.electricData[i].interval_start)));
         }
-        standingValues.push(getStandingPriceElect(house.tariff, house.electricData[electValues.length - 1].interval_start) * (getDayFromISO(house.electricData[electValues.length - 1].interval_end)));
-
+  
     }
 
  
@@ -86,17 +84,16 @@ function gasToPound(house) {
         }
     } else if (house.dataPeriod.group === "week") {
         for (var i = 0; i < gasValues.length; i++) {
-
             standingValues.push(getStandingPriceGas(house.tariff, house.gasData[i].interval_start) * 7);
         }
 
     } else if (house.dataPeriod.group === "month") {
-        for (var i = 0; i < gasValues.length - 1; i++) {
+        standingValues.push(getStandingPriceGas(house.tariff, house.gasData[0].interval_start) * (getDayFromISO(house.gasData[0].interval_end)));
+        for (var i = 1; i < gasValues.length; i++) {
             standingValues.push(getStandingPriceGas(house.tariff, house.gasData[i].interval_start) * daysInMonth(getMonthFromISO(house.gasData[i].interval_start)));
         }
-        standingValues.push(getStandingPriceGas(house.tariff, house.gasData[gasValues.length - 1].interval_start) * (getDayFromISO(house.gasData[gasValues.length - 1].interval_end)));
     }
-
+ 
     for (var i = 0; i < gasValues.length; i++) {
         gasValues[i] += standingValues[i];
         gasValues[i] = roundNumber(gasValues[i] * 1.05);
