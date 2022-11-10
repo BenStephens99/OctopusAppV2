@@ -45,6 +45,7 @@ class House {
                     password: ":",
                     data: {
                         period_from: period.from,
+                        period_to: period.to,
                         group_by: period.group
                     },
                     success: function (res) {

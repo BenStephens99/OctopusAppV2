@@ -306,6 +306,7 @@ input {
 }
 
 #allHouseUsageHolder {  
+    min-width: 750px;
     width: 70%;
 }
 
