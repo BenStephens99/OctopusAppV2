@@ -6,7 +6,22 @@ var year = date.getFullYear();
 
 const oneDay = 24 * 60 * 60 * 1000;
 
-const testDate = "2022-01-01T00:00:00Z";
+const testDate = "2022-04-01T00:00:00Z";
+
+function getMonthID(ISODate) {
+    return (nameOfMonth(getMonthFromISO(ISODate)).slice(0,3) 
+    + getMonthFromISO(ISODate)).toLowerCase();
+}   
+
+function getLastDateOfMonth(ISODate) {
+    date = new Date();
+    date.setMonth(getMonthFromISO(ISODate));
+    date.setFullYear(getYearFromISO(ISODate));
+
+    date.setDate(daysInMonth(getMonthFromISO(ISODate)));
+
+    return convertToISO(date);
+}
 
 function getFullDate() {
     return year + "-" + month + "-" + day;
@@ -87,11 +102,18 @@ String.prototype.replaceAt = function(index, replacement) {
 
 function zeroAllDays(dates) {
     dates.forEach(date => {
-        date.interval_start = date.interval_start.replaceAt(8, "01");
+        date.interval_start = date.interval_start.replaceAt(8, "01T00:00:00");
     });
 }
 
+function firstDateOfMonth(d) {
+    date = new Date();
+    date.setDate(1)
+    date.setFullYear(getYearFromISO(d));
+    date.setMonth(getMonthFromISO(d));
 
+    return convertToISO(date);
+}
 
 function getMonthsBetween(date1, date2) {
     var d1Y = getYearFromISO(date1);
@@ -115,6 +137,18 @@ function getMonthBefore(d) {
 
     return convertToISO(date);
 }
+
+function getMonthAfter(d) {
+    date = new Date();
+    date.setDate(1)
+    date.setFullYear(getYearFromISO(d));
+    date.setMonth(getMonthFromISO(d));
+
+    date.setMonth(date.getMonth() + 1);
+
+    return convertToISO(date);
+}
+
 
 function getNextDay(date) {
     nextDay = new Date();

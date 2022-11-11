@@ -5,6 +5,7 @@ function roundNumber(num) {
 }
 
 function addAllValues(values) {
+    console.log(values)
     var returnValue = 0;
     for (var i = 0; i < values.length; i++) {
         returnValue += values[i];
@@ -48,8 +49,6 @@ function electToPound(house) {
   
     }
 
- 
-    
     for (var i = 0; i < electValues.length; i++) {
         electValues[i] += standingValues[i];
         electValues[i] = roundNumber(electValues[i] * 1.05);

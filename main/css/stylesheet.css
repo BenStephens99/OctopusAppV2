@@ -110,6 +110,7 @@ main {
     margin: auto;
     display: flex;
     flex-wrap: wrap;
+    position: relative;
 }
 
 
@@ -301,6 +302,7 @@ input {
 #allHouseUsage {
     width: 100%;
     display: flex;
+    position:relative;
     flex-wrap: wrap;
     background-color: rgb(95, 95, 95);
     box-shadow: 0 0 10px rgb(44, 44, 44);
@@ -310,8 +312,10 @@ input {
 }
 
 #allHouseUsageHolder {  
+    width: 100%;
+    max-width: 1400px;
     min-width: 750px;
-    width: 70%;
+    margin: auto;
 }
 
 #calendar {
@@ -353,7 +357,8 @@ label#monthTo {
 }
 
 #loading {
-    text-align: center;
-    width: 100%;
-    margin: auto;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -3,8 +3,12 @@ function addGraphDiv(id) {
 }
 
 Chart.defaults.global.defaultFontColor = "#fff";
-const electricGraphColor = "rgba(41, 255, 45, 0.9)";
-const gasGraphColor = "rgba(39, 140, 255, 0.9)";
+
+const electBackgroudColor = "rgba(41, 255, 45, 0.4)";
+const electBorderColor = "rgba(41, 255, 45, 1)";
+
+const gasBackgroundColor = "rgba(39, 140, 255, 0.4)";
+const gasBorderColor = "rgba(39, 140, 255, 1)";
 
 function createGasAndElectGraph(house) {
     console.log(house)
@@ -56,15 +60,15 @@ function createGasAndElectGraph(house) {
                 label: "Electricity",
                 fill: false,
                 lineTension: 0,
-                backgroundColor: electricGraphColor,
-                borderColor: electricGraphColor,
+                backgroundColor: electBorderColor,
+                borderColor: electBackgroudColor,
                 data: electricValues,
             }, {
                 label: "Gas",
                 fill: false,
                 lineTension: 0,
-                backgroundColor: gasGraphColor,
-                borderColor: gasGraphColor,
+                backgroundColor: gasBorderColor,
+                borderColor: gasBackgroundColor,
                 data: gasValues,
             }]
         },
@@ -164,30 +168,30 @@ function createTariffGraph(house) {
                 label: "Electric per Kwh",
                 fill: false,
                 lineTension: 0,
-                backgroundColor: electricGraphColor,
-                borderColor: electricGraphColor,
+                backgroundColor:electBorderColor, 
+                borderColor: electBackgroudColor,
                 data: electTariffUnits,
             }, {
                 label: "Gas per KwH",
                 fill: false,
                 lineTension: 0,
-                backgroundColor: gasGraphColor,
-                borderColor: gasGraphColor,
+                backgroundColor: gasBorderColor,
+                borderColor: gasBackgroundColor,
                 data: gasTariffUnits,
             }, {
                 label: "Electric Standing Charge Per Day",
                 fill: false,
                 lineTension: 0,
-                backgroundColor: electricGraphColor,
-                borderColor: electricGraphColor,
+                backgroundColor: electBorderColor,
+                borderColor: electBackgroudColor,
                 borderDash: [10, 5],
                 data: electTariffStandings,
             }, {
                 label: "Gas Standing Charge Per Day",
                 fill: false,
                 lineTension: 0,
-                backgroundColor: gasGraphColor,
-                borderColor: gasGraphColor,
+                backgroundColor: gasBorderColor,
+                borderColor: gasBackgroundColor,
                 borderDash: [10, 5],
                 data: gasTariffStandings,
             }]
@@ -236,6 +240,104 @@ function createStatusBox(i) {
         + '<p class="elecCol">Electric:</p></div>' +
         '<button onclick="deleteHouse(' + i + ')" id="deleteButton">Delete</button>'
     '</div>'
+}
+
+function drawAllHousesGraph() {
+
+    var dateTimeValues = [];
+    var electricValues = [];
+    var gasValues = [];
+
+    for (var i = 0; i < allHouses[0].electricData.length; i++) {
+        dateTimeValues.push(
+            nameOfMonth(getMonthFromISO(allHouses[0].electricData[i].interval_start)) + " " +
+            getYearFromISO(allHouses[0].electricData[i].interval_start));
+        electricValues.push(0);
+        gasValues.push(0);
+    }
+
+    for (var j = 0; j < allHouses.length; j++) {
+        console.log(allHouses[j])
+        for (var i = 0; i < dateTimeValues.length; i++) {
+            electricValues[i] = roundNumber(electricValues[i] + electToPound(allHouses[j])[i]);
+            gasValues[i] = roundNumber(gasValues[i] + gasToPound(allHouses[j])[i]);
+        }
+    }
+
+    dateTimeValues.shift()
+    electricValues.shift()
+    gasValues.shift()
+
+    dateTimeValues.reverse()
+    electricValues.reverse()
+    gasValues.reverse()
+
+    var barColors = ["red", "green", "blue", "orange", "brown"];
+
+    new Chart("allHouseUsageGraph", {
+        type: "bar",
+        data: {
+            labels: dateTimeValues,
+            datasets: [{
+                label: "Electricity",
+                backgroundColor: electBackgroudColor,
+                borderColor: electBorderColor,
+                borderWidth: 3,
+                data: electricValues,
+            }, {
+                label: "Gas",
+                backgroundColor: gasBackgroundColor,
+                borderColor: gasBorderColor,
+                borderWidth: 3,
+                data: gasValues,
+            }]
+        }, options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }
+    });
+
+    document.getElementById("loading").style.display = "none";
+
+}
+
+function createPieChart(dataType) {
+    
+    var houseNames = [];
+    var graphValues= [];
+
+    allHouses.forEach(house => {
+        houseNames.push(house.address)
+    });
+
+    if (dataType === "gas") {
+        
+    }
+
+    var barColors = ["red", "green", "blue", "yellow", "purple", "orange"]
+
+    new Chart(dataType + "PieChart", {
+        type: "pie",
+        data: {
+            labels: houseNames,
+            datasets: [{
+                backgroundColor: barColors,
+                data: graphValues
+            }]
+        },
+        options: {
+            title: {
+                display: false,
+                text: dataType + " usage this month in £"
+            }
+        }
+    });
 }
 
 function formatDateTimeLables(dateTimeValues, periodGroup) {

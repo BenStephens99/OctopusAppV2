@@ -22,12 +22,12 @@ for (var i = 0; i < files.length; i++) {
 }
 
 function saveNewHouse(house) {
-    fs.writeFileSync(houseDir + house.postcode +'.json', JSON.stringify(house, null, 4));
+    fs.writeFileSync(houseDir + house.postcode + '.json', JSON.stringify(house, null, 4));
     location.reload();
 }
 
 function removeHouseFile(house) {
-    fs.unlinkSync(houseDir + house.postcode +'.json');
+    fs.unlinkSync(houseDir + house.postcode + '.json');
     location.reload();
 }
 
@@ -44,11 +44,14 @@ function getUnitPriceElect(tariff, period) {
                 period_to: getNextDay(period),
             },
             success: function (res) {
-                
-                dataToReturn = res.results[0].value_exc_vat;
+                if (res.results.length == 0) {
+                    return 0.21;
+                } else {
+                    dataToReturn = res.results[0].value_exc_vat;
+                }
             }
         })
-        return dataToReturn / 100;
+    return dataToReturn / 100;
 }
 
 function getStandingPriceElect(tariff, period) {
@@ -64,10 +67,15 @@ function getStandingPriceElect(tariff, period) {
                 period_to: getNextDay(period),
             },
             success: function (res) {
-                dataToReturn = res.results[0].value_exc_vat;
+                if (res.results.length == 0) {
+                    return 0.23;
+                } else {
+                    dataToReturn = res.results[0].value_exc_vat;
+                }
+
             }
         })
-        return dataToReturn / 100;
+    return dataToReturn / 100;
 }
 
 function getUnitPriceGas(tariff, period) {
@@ -83,10 +91,14 @@ function getUnitPriceGas(tariff, period) {
                 period_to: getNextDay(period),
             },
             success: function (res) {
-                dataToReturn = res.results[0].value_exc_vat;
+                if (res.results.length == 0) {
+                    return 0.4;
+                } else {
+                    dataToReturn = res.results[0].value_exc_vat;
+                }
             }
         })
-        return dataToReturn / 100;
+    return dataToReturn / 100;
 }
 
 function getStandingPriceGas(tariff, period) {
@@ -102,8 +114,12 @@ function getStandingPriceGas(tariff, period) {
                 period_to: getNextDay(period),
             },
             success: function (res) {
-                dataToReturn = res.results[0].value_exc_vat;
+                if (res.results.length == 0) {
+                    return 0.25;
+                } else {
+                    dataToReturn = res.results[0].value_exc_vat;
+                }
             }
         })
-        return dataToReturn / 100;
+    return dataToReturn / 100;
 }

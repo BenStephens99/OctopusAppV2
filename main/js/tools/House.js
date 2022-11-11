@@ -106,20 +106,18 @@ class House {
     }
 
     missingDataWithDates(res, exp) {
-
-        console.log(res)
-
-        if (res.length === 0 || res[0].interval_start.slice(0,7) !== this.dataPeriod.from.slice(0, 7)) {
-            res.push(new Data(0, this.dataPeriod.from, this.dataPeriod.from))
-            console.log(res)
+        if (res.length === 0 || res[0].interval_start.slice(0, 7) !== this.dataPeriod.to.slice(0, 7)) {
+            res.unshift(new Data(0, firstDateOfMonth(this.dataPeriod.to), firstDateOfMonth(this.dataPeriod.to)))
         }
-
-        for (var i = 0; i < exp; i++)
+        for (var i = 1; i < exp; i++) {
             if (res.length === exp) {
                 return;
             } else {
-                console.log(res)
+                if (res[i] == null) {
+                    res.splice(i, 0, (new Data(0, getMonthBefore(res[i - 1].interval_start), getMonthBefore(res[i - 1].interval_end))))
+                }
             }
+        }
     }
 
     missingDataToToday(res, exp) {
@@ -158,7 +156,6 @@ class House {
                 }
             }
         }
-
     }
 }
 

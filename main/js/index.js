@@ -1,8 +1,11 @@
 var graphPeriod = {
     group: "month",
-    from: getFirstDateLastMonth(1),
-    to: getFirstDateLastMonth(0),
+    from: getFirstDateLastMonth(6),
+    to: getLastDateOfMonth(getFirstDateLastMonth(0)),
 }
+
+document.getElementById(getMonthID(graphPeriod.from) + "From").selected = "selected";
+document.getElementById(getMonthID(graphPeriod.to) + "To").selected = "selected";
 
 var responses = 0;
 
@@ -10,45 +13,7 @@ jq("#calendar").submit(function (e) {
     e.preventDefault();
 });
 
-function drawAllHousesGraph() {
-
-    console.log(allHouses)
-
-    var dateTimeValues = [];   
-     var electricValues = [];
-
-    for(var i = 0; i < allHouses[0].electricData.length; i++) {
-        dateTimeValues.push(allHouses[0].electricData[i].interval_start)
-    }
-
-    console.log(dateTimeValues)
-
-    var barColors = ["red", "green", "blue", "orange", "brown"];
-
-    new Chart("allHouseUsageGraph", {
-        type: "bar",
-        data: {
-            labels: dateTimeValues,
-            datasets: [{
-                backgroundColor: gasGraphColor,
-                data: electricValues
-            }, {
-                backgroundColor: electricGraphColor,
-                data: electricValues
-            }]
-        }, options: {
-            scales: {
-                xAxes: [{
-                    stacked: true
-                }],
-                yAxes: [{
-                    stacked: true
-                }]
-            }
-        }
-    });
-}
-
+updateAllHousesGraph() 
 
 function updateAllHousesGraph() {
     let monthFrom = document.forms["calendar"]["monthFrom"].value;
@@ -57,17 +22,23 @@ function updateAllHousesGraph() {
     let yearTo = document.forms["calendar"]["yearTo"].value;
 
     graphPeriod.from = (monthYearToISOFrom(monthFrom, yearFrom))
-    graphPeriod.to = (monthYearToISOTo(monthTo, yearTo))
+    graphPeriod.to = (getNextDay(monthYearToISOTo(monthTo, yearTo)))
+    drawGraphs();
+}
+
+function drawGraphs() {
+    console.log(graphPeriod.to)
+    document.getElementById("loading").style.display = "block";
     responses = 0;
+    document.getElementById("allHouseUsageHolder").innerHTML = '<canvas id="allHouseUsageGraph"></canvas>';
+
     for (var i = 0; i < allHouses.length; i++) {
         allHouses[i].getData(graphPeriod, function (house) {
             responses++;
-            console.log(responses)  
             if (responses === allHouses.length) {
                 drawAllHousesGraph();
+                createPieChart("gas")
             }
         });
     }
-
 }
-

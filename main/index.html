@@ -28,18 +28,18 @@
                     <div id="from">
                         <label for="monthFrom">From:</label>
                         <select name="monthFrom" id="monthFrom">
-                            <option value="0">January</option>
-                            <option value="1">February</option>
-                            <option value="2">March</option>
-                            <option value="3">April</option>
-                            <option value="4">May</option>
-                            <option value="5">June</option>
-                            <option value="6">July</option>
-                            <option value="7">August</option>
-                            <option value="8">September</option>
-                            <option value="9">October</option>
-                            <option value="10">November</option>
-                            <option value="11">December</option>
+                            <option id="jan0From"  value="0">January</option>
+                            <option id="feb1From" value="1">February</option>
+                            <option id="mar2From" value="2">March</option>
+                            <option id="apr3From" value="3">April</option>
+                            <option id="may4From" value="4">May</option>
+                            <option id="jun5From" value="5">June</option>
+                            <option id="jul6From" value="6">July</option>
+                            <option id="aug7From" value="7">August</option>
+                            <option id="sep8From" value="8">September</option>
+                            <option id="oct9From" value="9">October</option>
+                            <option id="nov10From" value="10">November</option>
+                            <option id="dec11From" value="11">December</option>
                         </select>
                         <label for="yearFrom"></label>
                         <select name="yearFrom" id="yearFrom">
@@ -50,18 +50,18 @@
                     <div id="to">
                         <label id="monthTo" for="monthTo">To:</label>
                         <select name="monthTo" id="monthTo">
-                            <option value="0">January</option>
-                            <option value="1">February</option>
-                            <option value="2">March</option>
-                            <option value="3">April</option>
-                            <option value="4">May</option>
-                            <option value="5">June</option>
-                            <option value="6">July</option>
-                            <option value="7">August</option>
-                            <option value="8">September</option>
-                            <option value="9">October</option>
-                            <option value="10">November</option>
-                            <option value="11">December</option>
+                            <option id="jan0To"  value="0">January</option>
+                            <option id="feb1To" value="1">February</option>
+                            <option id="mar2To" value="2">March</option>
+                            <option id="apr3To" value="3">April</option>
+                            <option id="may4To" value="4">May</option>
+                            <option id="jun5To" value="5">June</option>
+                            <option id="jul6To" value="6">July</option>
+                            <option id="aug7To" value="7">August</option>
+                            <option id="sep8To" value="8">September</option>
+                            <option id="oct9To" value="9">October</option>
+                            <option id="nov10To" value="10">November</option>
+                            <option id="dec11To" value="11">December</option>
                         </select>
                         <label for="yearTo"></label>
                         <select name="yearTo" id="yearTo">
@@ -72,10 +72,19 @@
                     <input id="submitButton" type="submit" value="Update">
                 </form>
 
+                <h3 id="loading">Loading...</h3>
                 <div id="allHouseUsageHolder">
                     <canvas id="allHouseUsageGraph"></canvas>
                 </div>
             </div>
+
+            <div class="pieChartHolder">
+                <canvas id="electricPieChart"></canvas>
+            </div>
+            
+            <div class="pieChartHolder">
+                <canvas id="gasPieChart"></canvas>
+            </div> 
         </div>
 
 
