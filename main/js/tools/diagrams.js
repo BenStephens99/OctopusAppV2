@@ -7,6 +7,7 @@ const electricGraphColor = "rgba(41, 255, 45, 0.9)";
 const gasGraphColor = "rgba(39, 140, 255, 0.9)";
 
 function createGasAndElectGraph(house) {
+    console.log(house)
     var electricValues;
     var gasValues;
 

@@ -4,13 +4,25 @@ var graphPeriod = {
     to: getFirstDateLastMonth(0),
 }
 
+var responses = 0;
+
 jq("#calendar").submit(function (e) {
     e.preventDefault();
 });
 
 function drawAllHousesGraph() {
-    var dateTimeValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-    var electricValues = [55, 49, 44, 24, 15];
+
+    console.log(allHouses)
+
+    var dateTimeValues = [];   
+     var electricValues = [];
+
+    for(var i = 0; i < allHouses[0].electricData.length; i++) {
+        dateTimeValues.push(allHouses[0].electricData[i].interval_start)
+    }
+
+    console.log(dateTimeValues)
+
     var barColors = ["red", "green", "blue", "orange", "brown"];
 
     new Chart("allHouseUsageGraph", {
@@ -37,7 +49,6 @@ function drawAllHousesGraph() {
     });
 }
 
-drawAllHousesGraph();
 
 function updateAllHousesGraph() {
     let monthFrom = document.forms["calendar"]["monthFrom"].value;
@@ -47,8 +58,16 @@ function updateAllHousesGraph() {
 
     graphPeriod.from = (monthYearToISOFrom(monthFrom, yearFrom))
     graphPeriod.to = (monthYearToISOTo(monthTo, yearTo))
+    responses = 0;
+    for (var i = 0; i < allHouses.length; i++) {
+        allHouses[i].getData(graphPeriod, function (house) {
+            responses++;
+            console.log(responses)  
+            if (responses === allHouses.length) {
+                drawAllHousesGraph();
+            }
+        });
+    }
 
-    allHouses[0].getData(graphPeriod, function (house) {
-        console.log(house)
-    });
 }
+

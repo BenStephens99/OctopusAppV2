@@ -2,6 +2,8 @@ var currentProperty = '';
 var period = pastYear;
 var pageHeader = document.getElementById('pageHeader')
 var scaleTitle = document.getElementById('scaleTitle')
+var responses = 0;
+
 
 addHousesToNav();
 document.getElementById('scaleButtons').style.display = "none";
@@ -10,7 +12,15 @@ document.getElementById('scaleButtons').style.display = "none";
 for (let i = 0; i <= allHouses.length - 1; i++) {
     allHouses[i].getData(thisMonth, function (house) {
         createStatusBox(i);
+        responses++;
+        removeLoading()
     });
+}
+
+function removeLoading() {
+    if (responses === allHouses.length) {
+        document.getElementById("loading").style.display = "none";
+    }
 }
 
 function addHousesToNav() {
@@ -43,7 +53,7 @@ function drawGraphs() {
         createGasAndElectGraph(house);
         createTariffGraph(house);
     });
-    
+
 }
 
 function changePeriod(per, id) {

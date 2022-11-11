@@ -49,7 +49,7 @@ class House {
                         group_by: period.group
                     },
                     success: function (res) {
-                        console.log(house);
+                        ;
                         switch (i) {
                             case 0:
                                 recievedGasData = true;
@@ -80,28 +80,49 @@ class House {
     checkMissingData(res) {
         var expectedData = 0;
 
-        if (this.dataPeriod.group === "hour") {
+        if (this.dataPeriod.to != null) {
+            zeroAllDays(res)
+            this.missingDataWithDates(res, getMonthsBetween(this.dataPeriod.from, this.dataPeriod.to) + 1)
             return res;
-        } else if (this.dataPeriod.group === "day") {
-            expectedData = getDaysSince(this.dataPeriod.from)
-        } else if (this.dataPeriod.group === "week") {
-            expectedData = getMonthsSince(this.dataPeriod.from)
-        } else if (this.dataPeriod.group === "month") {
-            expectedData = getMonthsSince(this.dataPeriod.from)
         } else {
-            return res;
+            if (this.dataPeriod.group === "hour") {
+                return res;
+            } else if (this.dataPeriod.group === "day") {
+                expectedData = getDaysSince(this.dataPeriod.from)
+            } else if (this.dataPeriod.group === "month") {
+                zeroAllDays(res)
+                expectedData = getMonthsSince(this.dataPeriod.from)
+            } else {
+                return res;
+            }
         }
-
 
         if (res.length === expectedData) {
             return res;
         } else {
-            this.fixMissingData(res, expectedData)
+            this.missingDataToToday(res, expectedData)
             return res;
         }
     }
 
-    fixMissingData(res, exp) {
+    missingDataWithDates(res, exp) {
+
+        console.log(res)
+
+        if (res.length === 0 || res[0].interval_start.slice(0,7) !== this.dataPeriod.from.slice(0, 7)) {
+            res.push(new Data(0, this.dataPeriod.from, this.dataPeriod.from))
+            console.log(res)
+        }
+
+        for (var i = 0; i < exp; i++)
+            if (res.length === exp) {
+                return;
+            } else {
+                console.log(res)
+            }
+    }
+
+    missingDataToToday(res, exp) {
         var valuesToAdd = exp - res.length;
         var valuesAdded = 0;
 
@@ -123,12 +144,12 @@ class House {
             else if (this.dataPeriod.group === "month") { return getFirstDateLastMonth(num); }
             else { return; }
         }
-        
+
         for (var i = 0; i < exp; i++) {
             if (res[i] == null) {
-                res.push(new Data("No Data", this.expectedPreviousData(i), this.expectedPreviousData(i)))
+                res.push(new Data(0, this.expectedPreviousData(i), this.expectedPreviousData(i)))
             } else {
-                if (res[i].interval_start.slice(0, 10) !== this.expectedPreviousData(i).slice(0,10)) {
+                if (res[i].interval_start.slice(0, 10) !== this.expectedPreviousData(i).slice(0, 10)) {
                     res.splice(i, 0, new Data(0, this.expectedPreviousData(i), this.expectedPreviousData(i)));
                     valuesAdded++;
                     if (valuesAdded === valuesToAdd) {

@@ -80,6 +80,42 @@ function getMonthsSince(date) {
 
     return difference + 1;
 }
+
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+}
+
+function zeroAllDays(dates) {
+    dates.forEach(date => {
+        date.interval_start = date.interval_start.replaceAt(8, "01");
+    });
+}
+
+
+
+function getMonthsBetween(date1, date2) {
+    var d1Y = getYearFromISO(date1);
+    var d2Y = getYearFromISO(date2);
+    var d1M = getMonthFromISO(date1);
+    var d2M = getMonthFromISO(date2);
+
+    var yDiff = (d2Y - d1Y) * 12;
+    var mDiff = (d2M - d1M);
+
+    return yDiff + mDiff
+}
+
+function getMonthBefore(d) {
+    date = new Date();
+    date.setDate(1)
+    date.setFullYear(getYearFromISO(d));
+    date.setMonth(getMonthFromISO(d));
+
+    date.setMonth(date.getMonth() - 1);
+
+    return convertToISO(date);
+}
+
 function getNextDay(date) {
     nextDay = new Date();
 
