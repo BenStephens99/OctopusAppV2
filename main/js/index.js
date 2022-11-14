@@ -4,6 +4,11 @@ var graphPeriod = {
     to: getLastDateOfMonth(getFirstDateLastMonth(0)),
 }
 
+const pieIds = {
+    0: "electricPieChart",
+    1: "gasPieChart"
+}
+
 document.getElementById(getMonthID(graphPeriod.from) + "From").selected = "selected";
 document.getElementById(getMonthID(graphPeriod.to) + "To").selected = "selected";
 
@@ -13,7 +18,7 @@ jq("#calendar").submit(function (e) {
     e.preventDefault();
 });
 
-updateAllHousesGraph() 
+updateAllHousesGraph()
 
 function updateAllHousesGraph() {
     let monthFrom = document.forms["calendar"]["monthFrom"].value;
@@ -27,10 +32,14 @@ function updateAllHousesGraph() {
 }
 
 function drawGraphs() {
-    console.log(graphPeriod.to)
     document.getElementById("loading").style.display = "block";
     responses = 0;
     document.getElementById("allHouseUsageHolder").innerHTML = '<canvas id="allHouseUsageGraph"></canvas>';
+    let pieCharts = document.getElementsByClassName("pieChartHolder");
+
+    for (var i = 0; i < pieCharts.length; i++) {
+        pieCharts[i].innerHTML = '<canvas id=' + pieIds[i] + '></canvas>'
+    }
 
     for (var i = 0; i < allHouses.length; i++) {
         allHouses[i].getData(graphPeriod, function (house) {

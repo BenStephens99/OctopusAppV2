@@ -324,7 +324,6 @@ function createPieChart(dataType) {
         });
     }
 
-
     var barColors = [
         "#003f5c",
         "#2f4b7c",
