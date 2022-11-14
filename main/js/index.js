@@ -1,3 +1,5 @@
+const baseDir = "https://s3.eu-west-2.amazonaws.com/octopusapp.bs/"
+
 var graphPeriod = {
     group: "month",
     from: getFirstDateLastMonth(6),

@@ -1,16 +1,15 @@
-
 {
-    "postcode": "BN2_3JB",
-    "address": "13 Inverness Road",
+    "postcode": "BN14_8AG",
+    "address": "38A Broadwater Road",
     "tariff": {
         "productCode": "AFFECT-OCC-VAR-21-10-01",
         "tariffCodeE": "E-1R-AFFECT-OCC-VAR-21-10-01-J",
         "tariffCodeG": "G-1R-AFFECT-OCC-VAR-21-10-01-J"
     },
-    "mpan": "1900013399835",
-    "eSerialNum": "18P6212993",
-    "mprn": "647710202",
-    "gSerialNum": "G4P62168781800",
+    "mpan": "1900025410284",
+    "eSerialNum": "19L3497411",
+    "mprn": "9366422604",
+    "gSerialNum": "G4W00428672127",
     "electricData": [],
     "gasData": []
 }

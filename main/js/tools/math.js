@@ -5,7 +5,6 @@ function roundNumber(num) {
 }
 
 function addAllValues(values) {
-    console.log(values)
     var returnValue = 0;
     for (var i = 0; i < values.length; i++) {
         returnValue += values[i];
@@ -46,7 +45,6 @@ function electToPound(house) {
         for (var i = 1; i < electValues.length; i++) {
             standingValues.push(getStandingPriceElect(house.tariff, house.electricData[i].interval_start) * daysInMonth(getMonthFromISO(house.electricData[i].interval_start)));
         }
-  
     }
 
     for (var i = 0; i < electValues.length; i++) {

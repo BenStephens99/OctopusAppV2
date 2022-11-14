@@ -49,7 +49,6 @@ class House {
                         group_by: period.group
                     },
                     success: function (res) {
-                        ;
                         switch (i) {
                             case 0:
                                 recievedGasData = true;
@@ -72,6 +71,9 @@ class House {
                                 }
                         }
                     },
+                    error: function(err) {
+                        console.log(err)
+                    }
                 });
         }
 
@@ -115,12 +117,21 @@ class House {
             } else {
                 if (res[i] == null) {
                     res.splice(i, 0, (new Data(0, getMonthBefore(res[i - 1].interval_start), getMonthBefore(res[i - 1].interval_end))))
+                } else {
+                    if (res[i].interval_start.slice(0, 7) !== getMonthBefore(res[i - 1].interval_start).slice(0, 7)) {
+                        res.splice(i, 0, (new Data(0, getMonthBefore(res[i - 1].interval_start), getMonthBefore(res[i - 1].interval_end))));
+                    }
                 }
             }
         }
     }
 
     missingDataToToday(res, exp) {
+
+        if (res.length === 0) {
+            return;
+        }
+
         var valuesToAdd = exp - res.length;
         var valuesAdded = 0;
 

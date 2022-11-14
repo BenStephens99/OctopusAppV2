@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
+
 function createWindow () {
   const win = new BrowserWindow({
     width: 1100,
@@ -13,7 +14,7 @@ function createWindow () {
     icon: "./main/images/Cicon.ico"
   })
 
-  win.loadFile('main/index.html')
+  win.loadFile("./main/index.html")
 }
 
 app.whenReady().then(() => {

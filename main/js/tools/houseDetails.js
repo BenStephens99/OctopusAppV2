@@ -7,7 +7,7 @@ const FlexOctV2 = {
     tariffCodeG: "G-1R-AFFECT-OCC-VAR-21-10-01-J",
 }
 
-const apiKey = fs.readFileSync('./apiKey.key', 'utf8')
+const apiKey = fs.readFileSync('./apiKey.env', 'utf8')
 const allHouses = [];
 const houseDir = './main/houses/';
 var h;
@@ -21,7 +21,6 @@ for (var i = 0; i < files.length; i++) {
         h.mprn, h.gSerialNum,
     ))
 }
-
 
 function saveNewHouse(house) {
     fs.writeFileSync(houseDir + house.postcode + '.json', JSON.stringify(house, null, 4));
@@ -47,7 +46,7 @@ function getUnitPriceElect(tariff, period) {
             },
             success: function (res) {
                 if (res.results.length == 0) {
-                    return 0.21;
+                    dataToReturn = 21;
                 } else {
                     dataToReturn = res.results[0].value_exc_vat;
                 }
@@ -70,7 +69,7 @@ function getStandingPriceElect(tariff, period) {
             },
             success: function (res) {
                 if (res.results.length == 0) {
-                    return 0.23;
+                    dataToReturn = 23;
                 } else {
                     dataToReturn = res.results[0].value_exc_vat;
                 }
@@ -94,7 +93,7 @@ function getUnitPriceGas(tariff, period) {
             },
             success: function (res) {
                 if (res.results.length == 0) {
-                    return 0.4;
+                    dataToReturn = 4;
                 } else {
                     dataToReturn = res.results[0].value_exc_vat;
                 }
@@ -117,7 +116,7 @@ function getStandingPriceGas(tariff, period) {
             },
             success: function (res) {
                 if (res.results.length == 0) {
-                    return 0.25;
+                    dataToReturn = 25;
                 } else {
                     dataToReturn = res.results[0].value_exc_vat;
                 }
