@@ -103,14 +103,15 @@ main {
     overflow-y: scroll;
     transition: 0.5s;
     width: 100%;
+
 }
 
 #graphs {
     width: 100%;
-    margin: auto;
     display: flex;
     flex-wrap: wrap;
     position: relative;
+    margin-bottom: 1em;
 }
 
 
@@ -144,6 +145,10 @@ main {
     margin: 0;
     margin-bottom: 1em;
     font-weight: 400;
+    border-radius: 0.5em;
+    padding: 10px;
+    border: 1px solid rgb(110, 110, 110);
+    background-color: rgb(67, 66, 66);
 }
 
 .dataBox {
@@ -153,7 +158,7 @@ main {
 }
 
 .dataBox p {
-    margin: 0;
+    margin: 2px;
     margin-left: 1em;
     padding: 0;
     padding: 0.2em;
@@ -302,16 +307,16 @@ input {
 #allHouseUsage {
     width: 100%;
     display: flex;
-    position:relative;
+    position: relative;
     flex-wrap: wrap;
     background-color: rgb(95, 95, 95);
     box-shadow: 0 0 10px rgb(44, 44, 44);
     border-radius: 1em;
-    margin: 1em;
     padding: 1em;
+    margin: 1em;
 }
 
-#allHouseUsageHolder {  
+#allHouseUsageHolder {
     width: 100%;
     max-width: 1400px;
     min-width: 750px;
@@ -327,14 +332,15 @@ input {
     border-radius: 1em;
     background-color: rgb(95, 95, 95);
     box-shadow: 0 0 10px rgb(44, 44, 44);
-    
+
 }
 
 #calendar label {
     width: 100%;
 }
 
-#from, #to{
+#from,
+#to {
     width: 100%;
     margin-bottom: 1em;
 }
@@ -359,6 +365,35 @@ label#monthTo {
 #loading {
     position: absolute;
     top: 60%;
-    left: 50%;
+    left: 45%;
     transform: translate(-50%, -50%);
+    border: 8px solid #8f8f8f;
+    /* Light grey */
+    border-top: 8px solid rgb(255, 64, 64);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.pieChartHolder {
+    width: 48%;
+    margin: auto;
+}
+
+.pieChartHolder canvas {  
+    border-radius: 1em;
+    padding-bottom: 1em;
+    background-color: rgb(95, 95, 95);
+    box-shadow: 0 0 10px rgb(44, 44, 44);
 }

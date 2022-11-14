@@ -37,7 +37,8 @@ function drawGraphs() {
             responses++;
             if (responses === allHouses.length) {
                 drawAllHousesGraph();
-                createPieChart("gas")
+                createPieChart("gas");
+                createPieChart("electric");
             }
         });
     }

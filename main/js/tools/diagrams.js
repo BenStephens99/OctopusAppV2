@@ -168,7 +168,7 @@ function createTariffGraph(house) {
                 label: "Electric per Kwh",
                 fill: false,
                 lineTension: 0,
-                backgroundColor:electBorderColor, 
+                backgroundColor: electBorderColor,
                 borderColor: electBackgroudColor,
                 data: electTariffUnits,
             }, {
@@ -308,19 +308,33 @@ function drawAllHousesGraph() {
 }
 
 function createPieChart(dataType) {
-    
-    var houseNames = [];
-    var graphValues= [];
 
-    allHouses.forEach(house => {
-        houseNames.push(house.address)
-    });
+    var houseNames = [];
+    var graphValues = [];
 
     if (dataType === "gas") {
-        
+        allHouses.forEach(house => {
+            houseNames.push(house.address)
+            graphValues.push(addAllValues(gasToPound(house)))
+        });
+    } else if (dataType === "electric") {
+        allHouses.forEach(house => {
+            houseNames.push(house.address)
+            graphValues.push(addAllValues(electToPound(house)))
+        });
     }
 
-    var barColors = ["red", "green", "blue", "yellow", "purple", "orange"]
+
+    var barColors = [
+        "#003f5c",
+        "#2f4b7c",
+        "#665191",
+        "#a05195",
+        "#d45087",
+        "#f95d6a",
+        "#ff7c43",
+        "#ffa600"
+    ]
 
     new Chart(dataType + "PieChart", {
         type: "pie",
@@ -333,8 +347,8 @@ function createPieChart(dataType) {
         },
         options: {
             title: {
-                display: false,
-                text: dataType + " usage this month in £"
+                display: true,
+                text: capitaliseFirstLetter(dataType)
             }
         }
     });
@@ -355,4 +369,8 @@ function formatDateTimeLables(dateTimeValues, periodGroup) {
         returnValues.push(this.formatter(dateTimeValues[i]));
     }
     return returnValues;
+}
+
+function capitaliseFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }

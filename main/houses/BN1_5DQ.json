@@ -1,0 +1,15 @@
+{
+    "postcode": "BN1_5DQ",
+    "address": "3 Old Shoreham Road",
+    "tariff": {
+        "productCode": "AFFECT-OCC-VAR-21-10-01",
+        "tariffCodeE": "E-1R-AFFECT-OCC-VAR-21-10-01-J",
+        "tariffCodeG": "G-1R-AFFECT-OCC-VAR-21-10-01-J"
+    },
+    "mpan": "1900005374710",
+    "eSerialNum": "20J0031284",
+    "mprn": "926182207",
+    "gSerialNum": "G4W00136962127",
+    "electricData": [],
+    "gasData": []
+}
