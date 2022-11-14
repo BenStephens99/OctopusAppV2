@@ -7,6 +7,7 @@ const FlexOctV2 = {
     tariffCodeG: "G-1R-AFFECT-OCC-VAR-21-10-01-J",
 }
 
+const apiKey = fs.readFileSync('./apiKey.key', 'utf8')
 const allHouses = [];
 const houseDir = './main/houses/';
 var h;
@@ -20,6 +21,7 @@ for (var i = 0; i < files.length; i++) {
         h.mprn, h.gSerialNum,
     ))
 }
+
 
 function saveNewHouse(house) {
     fs.writeFileSync(houseDir + house.postcode + '.json', JSON.stringify(house, null, 4));

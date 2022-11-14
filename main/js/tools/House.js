@@ -41,7 +41,7 @@ class House {
                     type: "GET",
                     url: urls[i],
                     dataType: 'json',
-                    username: "sk_live_wTNi3svVwlDYAA5tdDO22c9X",
+                    username: apiKey,
                     password: ":",
                     data: {
                         period_from: period.from,
