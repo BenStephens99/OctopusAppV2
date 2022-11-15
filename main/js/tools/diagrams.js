@@ -244,9 +244,19 @@ function createStatusBox(i) {
 
 function drawAllHousesGraph() {
 
+
     var dateTimeValues = [];
     var electricValues = [];
     var gasValues = [];
+    var tariffData = [];
+
+    for (var i = 0; i < allHouses[0].electricData.length; i++) {
+        dateTimeValues.push(allHouses[0].electricData[i].interval_start)
+    }
+
+    tariffData = getAllTariffDetails(FlexOctV2, dateTimeValues);
+    console.log(electToPoundWithTarriffData(allHouses[0], tariffData)); /// 
+    dateTimeValues = [];
 
     for (var i = 0; i < allHouses[0].electricData.length; i++) {
         dateTimeValues.push(
@@ -257,12 +267,12 @@ function drawAllHousesGraph() {
     }
 
     for (var j = 0; j < allHouses.length; j++) {
-        console.log(allHouses[j])
         for (var i = 0; i < dateTimeValues.length; i++) {
             electricValues[i] = roundNumber(electricValues[i] + electToPound(allHouses[j])[i]);
             gasValues[i] = roundNumber(gasValues[i] + gasToPound(allHouses[j])[i]);
         }
     }
+
 
     dateTimeValues.shift()
     electricValues.shift()

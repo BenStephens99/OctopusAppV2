@@ -124,3 +124,24 @@ function getStandingPriceGas(tariff, period) {
         })
     return dataToReturn / 100;
 }
+
+function getAllTariffDetails(tariff, dates) {
+
+    console.log(dates)
+
+    var tarrifDetails = {
+        electricUnitPrices: [],
+        gasUnitPrices: [],
+        electricStandingPrices: [],
+        gasStandingPrices: [],
+    }
+
+    dates.forEach(date => {
+        tarrifDetails.electricUnitPrices.push(getUnitPriceElect(tariff, date))
+        tarrifDetails.gasUnitPrices.push(getUnitPriceGas(tariff, date))
+        tarrifDetails.electricStandingPrices.push(getStandingPriceElect(tariff, date))
+        tarrifDetails.gasStandingPrices.push(getUnitPriceGas(tariff, date))
+    });
+
+    return tarrifDetails;
+}
