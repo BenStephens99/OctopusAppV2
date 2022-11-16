@@ -36,7 +36,7 @@ class House {
         for (let i = 0; i < 2; i++) {
             switch (i) {
                 case 0:
-                    if (this.mprn != '') {
+                    if (this.mprn != '' && this.gSerialNum != '') {
                         jq.ajax
                             ({
                                 type: "GET",
@@ -78,7 +78,7 @@ class House {
                         break;
                     }
                 case 1:
-                    if (this.mpan != '') {
+                    if (this.mpan != '' && this.eSerialNum != '') {
                         jq.ajax
                             ({
                                 type: "GET",

@@ -1,8 +1,6 @@
 const fs = require("fs");
 const jq = require("jquery");
 
-
-
 const FlexOctV2 = {
     productCode: "AFFECT-OCC-VAR-21-10-01",
     tariffCodeE: "E-1R-AFFECT-OCC-VAR-21-10-01-J",
@@ -11,7 +9,7 @@ const FlexOctV2 = {
 
 const apiKey = fs.readFileSync('./apiKey.env', 'utf8')
 const allHouses = [];
-const houseDir = './main/houses/';
+const houseDir = './houses/';
 var h;
 const files = fs.readdirSync(houseDir);
 for (var i = 0; i < files.length; i++) {

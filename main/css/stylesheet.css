@@ -317,9 +317,7 @@ input {
 }
 
 #allHouseUsageHolder {
-    width: 100%;
-    max-width: 1400px;
-    min-width: 750px;
+    width: 70%;
     margin: auto;
 }
 
@@ -339,8 +337,7 @@ input {
     width: 100%;
 }
 
-#from,
-#to {
+#from, #to {
     width: 100%;
     margin-bottom: 1em;
 }
@@ -396,4 +393,15 @@ label#monthTo {
     padding-bottom: 1em;
     background-color: rgb(95, 95, 95);
     box-shadow: 0 0 10px rgb(44, 44, 44);
+}
+
+@media screen and (max-width: 1500px) {
+    .pieChartHolder {
+        width: 96%;
+        margin-top: 1em;;
+    }
+    
+    #allHouseUsageHolder {
+        width: 100%;
+    }
 }

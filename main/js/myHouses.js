@@ -3,11 +3,10 @@ var period = pastYear;
 var pageHeader = document.getElementById('pageHeader')
 var scaleTitle = document.getElementById('scaleTitle')
 var responses = 0;
-
+var formIsOpen = false;
 
 addHousesToNav();
 document.getElementById('scaleButtons').style.display = "none";
-
 
 for (let i = 0; i <= allHouses.length - 1; i++) {
     allHouses[i].getData(thisMonth, function (house) {
@@ -30,7 +29,6 @@ function addHousesToNav() {
 }
 
 function changeProperty(id) {
-    document.getElementById('graphs').innerHTML = '';
     document.getElementById('buttonHolder').style.display = "none";
     document.getElementById('newHouseForm').style.display = "none";
     document.getElementById('scaleButtons').style.display = "block";
@@ -47,13 +45,13 @@ function changeProperty(id) {
 }
 
 function drawGraphs() {
+    document.getElementById('graphs').innerHTML = '';
     addGraphDiv(currentProperty.postcode);
     addGraphDiv("tariffGraph")
     currentProperty.getData(period, function (house) {
         createGasAndElectGraph(house);
         createTariffGraph(house);
     });
-
 }
 
 function changePeriod(per, id) {
@@ -73,11 +71,16 @@ function capitaliseFirstLetter(string) {
 function addNewHouse() {
     let postcode = document.forms["newHouseForm"]["postcode"].value;
     let address = document.forms["newHouseForm"]["address"].value;
+    let flatNum = document.forms["newHouseForm"]["flatNum"].value;
     let mpan = document.forms["newHouseForm"]["mpan"].value;
     let eSerialNum = document.forms["newHouseForm"]["eSerialNum"].value;
     let mprn = document.forms["newHouseForm"]["mprn"].value;
     let gSerialNum = document.forms["newHouseForm"]["gSerialNum"].value;
 
+    if (flatNum != '' || flatNum != null) {
+        address = address + ", Flat " + flatNum;
+        postcode = postcode + " F" + flatNum;
+    }
     postcode = postcode.replace(/\s+/g, '_');
 
     saveNewHouse(new House(
@@ -88,8 +91,6 @@ function addNewHouse() {
     ))
 }
 
-
-var formIsOpen = false;
 function showForm() {
     if (formIsOpen === false) {
         document.getElementById("newHouseForm").style.display = "block";

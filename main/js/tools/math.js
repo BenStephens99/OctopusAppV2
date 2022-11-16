@@ -19,6 +19,13 @@ function electToPoundWithTarriffData(house, tariffData) {
 
     var electValues = [];
 
+    if (house.mpan == '') {
+        for (let i = 0; i < house.electricData.length; i++) {
+            electValues.push(0)
+        }
+        return electValues;
+    }
+
     if (house.dataPeriod.group === "hour") {
         var unitPrice = roundNumber(tariffData.electricUnitPrices[0])
         for (var i = 0; i < house.electricData.length; i++) {
@@ -56,13 +63,28 @@ function electToPoundWithTarriffData(house, tariffData) {
         electValues[i] += standingValues[i];
         electValues[i] = roundNumber(electValues[i] * 1.05);
 
-    } 
+    }
+
+    if (house.mpan == '') {
+        electValues.forEach(electValue => {
+            electValue = 0;
+        });
+    }
+
     return electValues;
 }
 
 function gasToPoundWithTarriffData(house, tariffData) {
 
     var gasValues = [];
+
+    if (house.mprn == '') {
+        for (let i = 0; i < house.gasData.length; i++) {
+            gasValues.push(0)
+        }
+        return gasValues;
+    }
+
 
     if (house.dataPeriod.group === "hour") {
         var unitPrice = roundNumber(getUnitPriceGas(house.tariff, house.gasData[0].interval_start))
@@ -101,14 +123,21 @@ function gasToPoundWithTarriffData(house, tariffData) {
         gasValues[i] += standingValues[i];
         gasValues[i] = roundNumber(gasValues[i] * 1.05);
 
-    } 
+    }
+
     return gasValues;
 }
 
-
-
 function electToPound(house) {
     var electValues = [];
+
+    if (house.mpan == '') {
+        for (let i = 0; i < house.electricData.length; i++) {
+            electValues.push(0)
+        }
+        return electValues;
+    }
+
     if (house.dataPeriod.group === "hour") {
         var unitPrice = roundNumber(getUnitPriceElect(house.tariff, house.electricData[0].interval_start))
         for (var i = 0; i < house.electricData.length; i++) {
@@ -146,12 +175,27 @@ function electToPound(house) {
         electValues[i] += standingValues[i];
         electValues[i] = roundNumber(electValues[i] * 1.05);
 
-    } 
+    }
+
+    if (house.mpan == '') {
+        electValues.forEach(electValue => {
+            electValue = 0;
+        });
+    }
+
     return electValues;
 }
 
 function gasToPound(house) {
     var gasValues = [];
+
+    if (house.mprn == '') {
+        for (let i = 0; i < house.gasData.length; i++) {
+            gasValues.push(0)
+        }
+        return gasValues;
+    }
+
     if (house.dataPeriod.group === "hour") {
         var unitPrice = roundNumber(getUnitPriceGas(house.tariff, house.gasData[0].interval_start))
         for (var i = 0; i < house.gasData.length; i++) {
@@ -184,11 +228,17 @@ function gasToPound(house) {
             standingValues.push(getStandingPriceGas(house.tariff, house.gasData[i].interval_start) * daysInMonth(getMonthFromISO(house.gasData[i].interval_start)));
         }
     }
- 
+
     for (var i = 0; i < gasValues.length; i++) {
         gasValues[i] += standingValues[i];
         gasValues[i] = roundNumber(gasValues[i] * 1.05);
     }
-    
+
+    if (house.mprn == '') {
+        gasValues.forEach(gasValue => {
+            gasValue = 0;
+        });
+    }
+
     return gasValues;
 }

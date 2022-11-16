@@ -10,6 +10,27 @@ const electBorderColor = "rgba(41, 255, 45, 1)";
 const gasBackgroundColor = "rgba(39, 140, 255, 0.4)";
 const gasBorderColor = "rgba(39, 140, 255, 1)";
 
+const barColors = [
+    '#1197F0',
+    '#0CF7F7',
+    '#00E07F',
+    '#0CF72C',
+    '#57F000',
+    '#B7F011',
+    '#F7E50C',
+    '#E0AD00',
+    '#F79C0C',
+    '#F06100',
+    '#F04211',
+    '#F70C0E',
+    '#E000AA',
+    '#B40CF7',
+    '#4700F0',
+    '#1152FA',
+    '#0B96D9',
+    '#00F0DD',
+]
+
 function createGasAndElectGraph(house) {
     console.log(house)
     let electricValues;
@@ -79,12 +100,15 @@ function createGasAndElectGraph(house) {
             scales: {
                 yAxes: [{
                     scaleLabel: {
-                        display: true,
+                        display: false,
                         labelString: '£',
                         fontSize: '16',
                     },
                     ticks: {
                         beginAtZero: true,
+                        callback: function(val, index) {
+                            return '£' + val;
+                          },
                     }
                 }],
                 xAxes: [{
@@ -99,6 +123,11 @@ function createGasAndElectGraph(house) {
                 display: true,
                 text: house.address,
                 fontSize: 16
+            },
+            tooltips: {
+                callbacks: {
+                    label: (item) => `£${item.yLabel}`,
+                },
             },
         }
     });
@@ -203,12 +232,15 @@ function createTariffGraph(house) {
             scales: {
                 yAxes: [{
                     scaleLabel: {
-                        display: true,
+                        display: false,
                         labelString: '£',
                         fontSize: '16',
                     },
                     ticks: {
                         beginAtZero: true,
+                        callback: function(val, index) {
+                            return '£' + val;
+                          },
                     }
                 }],
                 xAxes: [{
@@ -224,6 +256,11 @@ function createTariffGraph(house) {
                 display: true,
                 text: 'This Tariff (' + house.tariff.productCode + ')',
                 fontSize: 16
+            },
+            tooltips: {
+                callbacks: {
+                    label: (item) => `£${item.yLabel}`,
+                },
             },
         }
     });
@@ -255,12 +292,12 @@ function drawAllHousesGraph() {
 
     let FlexOctV2TariffData = getAllTariffDetails(FlexOctV2, dateTimeValues);
 
-    let currentHouseElectricData;  
+    let currentHouseElectricData;
     let currentHouseGasData;
 
     for (let i = 0; i < allHouses.length; i++) {
         currentHouseElectricData = electToPoundWithTarriffData(allHouses[i], FlexOctV2TariffData);
-        currentHouseGasData = gasToPoundWithTarriffData(allHouses[i], FlexOctV2TariffData); 
+        currentHouseGasData = gasToPoundWithTarriffData(allHouses[i], FlexOctV2TariffData);
         for (let j = 0; j < dateTimeValues.length; j++) {
             electricValues[j] += currentHouseElectricData[j];
             gasValues[j] += currentHouseGasData[j];
@@ -273,7 +310,12 @@ function drawAllHousesGraph() {
         dateTimeValues.push(
             nameOfMonth(getMonthFromISO(allHouses[0].electricData[i].interval_start)) + " " +
             getYearFromISO(allHouses[0].electricData[i].interval_start));
-       
+
+    }
+
+    for (let j = 0; j < dateTimeValues.length; j++) {
+        electricValues[j] = roundNumber(electricValues[j]);
+        gasValues[j] = roundNumber(gasValues[j]);
     }
 
     dateTimeValues.shift()
@@ -283,8 +325,6 @@ function drawAllHousesGraph() {
     dateTimeValues.reverse()
     electricValues.reverse()
     gasValues.reverse()
-
-    let barColors = ["red", "green", "blue", "orange", "brown"];
 
     new Chart("allHouseUsageGraph", {
         type: "bar",
@@ -309,10 +349,22 @@ function drawAllHousesGraph() {
                     stacked: true
                 }],
                 yAxes: [{
-                    stacked: true
+                    stacked: true,
+                    ticks: {
+                        callback: function(val, index) {
+                        return '£' + val;
+                      },
+                    }
+                    
                 }]
-            }
-        }
+            },
+            tooltips: {
+                callbacks: {
+                    label: (item) => `£${item.yLabel}`,
+                },
+            },
+        },
+
     });
 
     document.getElementById("loading").style.display = "none";
@@ -335,17 +387,6 @@ function createPieChart(dataType) {
             graphValues.push(addAllValues(electToPound(house)))
         });
     }
-
-    let barColors = [
-        "#003f5c",
-        "#2f4b7c",
-        "#665191",
-        "#a05195",
-        "#d45087",
-        "#f95d6a",
-        "#ff7c43",
-        "#ffa600"
-    ]
 
     new Chart(dataType + "PieChart", {
         type: "pie",
