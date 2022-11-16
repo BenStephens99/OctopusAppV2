@@ -127,8 +127,6 @@ function getStandingPriceGas(tariff, period) {
 
 function getAllTariffDetails(tariff, dates) {
 
-    console.log(dates)
-
     var tarrifDetails = {
         electricUnitPrices: [],
         gasUnitPrices: [],
@@ -140,8 +138,8 @@ function getAllTariffDetails(tariff, dates) {
         tarrifDetails.electricUnitPrices.push(getUnitPriceElect(tariff, date))
         tarrifDetails.gasUnitPrices.push(getUnitPriceGas(tariff, date))
         tarrifDetails.electricStandingPrices.push(getStandingPriceElect(tariff, date))
-        tarrifDetails.gasStandingPrices.push(getUnitPriceGas(tariff, date))
+        tarrifDetails.gasStandingPrices.push(getStandingPriceGas(tariff, date))
     });
-
+    
     return tarrifDetails;
 }

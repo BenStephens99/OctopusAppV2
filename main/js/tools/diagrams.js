@@ -12,8 +12,8 @@ const gasBorderColor = "rgba(39, 140, 255, 1)";
 
 function createGasAndElectGraph(house) {
     console.log(house)
-    var electricValues;
-    var gasValues;
+    let electricValues;
+    let gasValues;
 
     if (house.electricData.length !== 0) {
         electricValues = electToPound(house);
@@ -22,16 +22,16 @@ function createGasAndElectGraph(house) {
         gasValues = gasToPound(house);
     }
 
-    var dateTimeValues = [];
+    let dateTimeValues = [];
 
 
     if (house.electricData.length !== 0) {
-        for (var i = 0; i <= house.electricData.length - 1; i++) {
+        for (let i = 0; i <= house.electricData.length - 1; i++) {
             dateTimeValues.push(house.electricData[i].interval_start);
         }
 
     } else if (house.gasData !== 0) {
-        for (var i = 0; i <= house.gasData.length - 1; i++) {
+        for (let i = 0; i <= house.gasData.length - 1; i++) {
             dateTimeValues.push(house.gasData[i].interval_start);
         }
 
@@ -106,20 +106,20 @@ function createGasAndElectGraph(house) {
 
 function createTariffGraph(house) {
 
-    var dateTimeValues = [];
-    var electTariffUnits = [];
-    var gasTariffUnits = [];
+    let dateTimeValues = [];
+    let electTariffUnits = [];
+    let gasTariffUnits = [];
 
-    var electTariffStandings = [];
-    var gasTariffStandings = [];
+    let electTariffStandings = [];
+    let gasTariffStandings = [];
 
 
     if (house.electricData.length !== 0) {
-        for (var i = 0; i < house.electricData.length; i++) {
+        for (let i = 0; i < house.electricData.length; i++) {
             dateTimeValues.push(house.electricData[i].interval_start)
         }
     } else if (house.gasData.length !== 0) {
-        for (var i = 0; i < house.gasData.length; i++) {
+        for (let i = 0; i < house.gasData.length; i++) {
             dateTimeValues.push(house.gasData[i].interval_start)
         }
     } else {
@@ -128,12 +128,12 @@ function createTariffGraph(house) {
 
     if (house.dataPeriod.group === "hour") {
 
-        var electUnitPrice = roundNumber(getUnitPriceElect(house.tariff, dateTimeValues[0]))
-        var gasUnitPrice = roundNumber(getUnitPriceGas(house.tariff, dateTimeValues[0]))
-        var electStandingPrice = roundNumber(getStandingPriceElect(house.tariff, dateTimeValues[0]))
-        var gasStandingPrice = roundNumber(getStandingPriceGas(house.tariff, dateTimeValues[0]))
+        let electUnitPrice = roundNumber(getUnitPriceElect(house.tariff, dateTimeValues[0]))
+        let gasUnitPrice = roundNumber(getUnitPriceGas(house.tariff, dateTimeValues[0]))
+        let electStandingPrice = roundNumber(getStandingPriceElect(house.tariff, dateTimeValues[0]))
+        let gasStandingPrice = roundNumber(getStandingPriceGas(house.tariff, dateTimeValues[0]))
 
-        for (var i = 0; i < dateTimeValues.length; i++) {
+        for (let i = 0; i < dateTimeValues.length; i++) {
             electTariffUnits.push(roundNumber(electUnitPrice));
             gasTariffUnits.push(roundNumber(gasUnitPrice));
             electTariffStandings.push(roundNumber(electStandingPrice));
@@ -142,7 +142,7 @@ function createTariffGraph(house) {
             dateTimeValues[i] = dateTimeValues[i];
         }
     } else {
-        for (var i = 0; i < dateTimeValues.length; i++) {
+        for (let i = 0; i < dateTimeValues.length; i++) {
             electTariffUnits.push(roundNumber(getUnitPriceElect(house.tariff, dateTimeValues[i])));
             gasTariffUnits.push(roundNumber(getUnitPriceGas(house.tariff, dateTimeValues[i])));
             electTariffStandings.push(roundNumber(getStandingPriceElect(house.tariff, dateTimeValues[i])));
@@ -243,36 +243,38 @@ function createStatusBox(i) {
 }
 
 function drawAllHousesGraph() {
+    let dateTimeValues = [];
+    let electricValues = [];
+    let gasValues = [];
 
-
-    var dateTimeValues = [];
-    var electricValues = [];
-    var gasValues = [];
-    var tariffData = [];
-
-    for (var i = 0; i < allHouses[0].electricData.length; i++) {
+    for (let i = 0; i < allHouses[0].electricData.length; i++) {
         dateTimeValues.push(allHouses[0].electricData[i].interval_start)
-    }
-
-    tariffData = getAllTariffDetails(FlexOctV2, dateTimeValues);
-    console.log(electToPoundWithTarriffData(allHouses[0], tariffData)); /// 
-    dateTimeValues = [];
-
-    for (var i = 0; i < allHouses[0].electricData.length; i++) {
-        dateTimeValues.push(
-            nameOfMonth(getMonthFromISO(allHouses[0].electricData[i].interval_start)) + " " +
-            getYearFromISO(allHouses[0].electricData[i].interval_start));
         electricValues.push(0);
         gasValues.push(0);
     }
 
-    for (var j = 0; j < allHouses.length; j++) {
-        for (var i = 0; i < dateTimeValues.length; i++) {
-            electricValues[i] = roundNumber(electricValues[i] + electToPound(allHouses[j])[i]);
-            gasValues[i] = roundNumber(gasValues[i] + gasToPound(allHouses[j])[i]);
+    let FlexOctV2TariffData = getAllTariffDetails(FlexOctV2, dateTimeValues);
+
+    let currentHouseElectricData;  
+    let currentHouseGasData;
+
+    for (let i = 0; i < allHouses.length; i++) {
+        currentHouseElectricData = electToPoundWithTarriffData(allHouses[i], FlexOctV2TariffData);
+        currentHouseGasData = gasToPoundWithTarriffData(allHouses[i], FlexOctV2TariffData); 
+        for (let j = 0; j < dateTimeValues.length; j++) {
+            electricValues[j] += currentHouseElectricData[j];
+            gasValues[j] += currentHouseGasData[j];
         }
     }
 
+    dateTimeValues = [];
+
+    for (let i = 0; i < allHouses[0].electricData.length; i++) {
+        dateTimeValues.push(
+            nameOfMonth(getMonthFromISO(allHouses[0].electricData[i].interval_start)) + " " +
+            getYearFromISO(allHouses[0].electricData[i].interval_start));
+       
+    }
 
     dateTimeValues.shift()
     electricValues.shift()
@@ -282,7 +284,7 @@ function drawAllHousesGraph() {
     electricValues.reverse()
     gasValues.reverse()
 
-    var barColors = ["red", "green", "blue", "orange", "brown"];
+    let barColors = ["red", "green", "blue", "orange", "brown"];
 
     new Chart("allHouseUsageGraph", {
         type: "bar",
@@ -319,8 +321,8 @@ function drawAllHousesGraph() {
 
 function createPieChart(dataType) {
 
-    var houseNames = [];
-    var graphValues = [];
+    let houseNames = [];
+    let graphValues = [];
 
     if (dataType === "gas") {
         allHouses.forEach(house => {
@@ -334,7 +336,7 @@ function createPieChart(dataType) {
         });
     }
 
-    var barColors = [
+    let barColors = [
         "#003f5c",
         "#2f4b7c",
         "#665191",
@@ -364,7 +366,7 @@ function createPieChart(dataType) {
 }
 
 function formatDateTimeLables(dateTimeValues, periodGroup) {
-    var returnValues = [];
+    let returnValues = [];
     this.formatter = function (value) {
         if (periodGroup === "hour") {
             return nameOfTime(getTimeFromISO(value));
@@ -374,7 +376,7 @@ function formatDateTimeLables(dateTimeValues, periodGroup) {
             return nameOfMonth(getMonthFromISO(value)) + " " + getYearFromISO(value);
         }
     }
-    for (var i = 0; i < dateTimeValues.length; i++) {
+    for (let i = 0; i < dateTimeValues.length; i++) {
         returnValues.push(this.formatter(dateTimeValues[i]));
     }
     return returnValues;

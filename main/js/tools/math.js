@@ -16,8 +16,6 @@ var flexOctOct21UnitElect = [];
 var flexOctOct21StandingElect = [];
 
 function electToPoundWithTarriffData(house, tariffData) {
-    console.log(tariffData)
-    console.log(house)
 
     var electValues = [];
 
@@ -61,6 +59,55 @@ function electToPoundWithTarriffData(house, tariffData) {
     } 
     return electValues;
 }
+
+
+
+function gasToPoundWithTarriffData(house, tariffData) {
+
+    var gasValues = [];
+
+    if (house.dataPeriod.group === "hour") {
+        var unitPrice = roundNumber(getUnitPriceGas(house.tariff, house.gasData[0].interval_start))
+        for (var i = 0; i < house.gasData.length; i++) {
+            gasValues.push((house.gasData[i].consumption * 1.02264 * 39 / 3.6) * unitPrice);
+        }
+    } else {
+        for (var i = 0; i < house.gasData.length; i++) {
+            gasValues.push((house.gasData[i].consumption * 1.02264 * 39 / 3.6) * getUnitPriceGas(house.tariff, house.gasData[i].interval_start));
+        }
+    }
+
+    var standingValues = [];
+
+    if (house.dataPeriod.group === "hour") {
+        var standingPrice = (tariffData.gasStandingPrices[0] / 24)
+        for (var i = 0; i < gasValues.length; i++) {
+            standingValues.push(standingPrice);
+        }
+    } else if (house.dataPeriod.group === "day") {
+        for (var i = 0; i < gasValues.length; i++) {
+            standingValues.push(tariffData.gasStandingPrices[i]);
+        }
+    } else if (house.dataPeriod.group === "week") {
+        for (var i = 0; i < gasValues.length; i++) {
+            standingValues.push(tariffData.gasStandingPrices[i] * 7);
+        }
+    } else if (house.dataPeriod.group === "month") {
+        standingValues.push(tariffData.gasStandingPrices[0]) * (getDayFromISO(house.gasData[0].interval_end));
+        for (var i = 1; i < gasValues.length; i++) {
+            standingValues.push(tariffData.gasStandingPrices[0] * daysInMonth(getMonthFromISO(house.gasData[i].interval_start)));
+        }
+    }
+
+    for (var i = 0; i < gasValues.length; i++) {
+        gasValues[i] += standingValues[i];
+        gasValues[i] = roundNumber(gasValues[i] * 1.05);
+
+    } 
+    return gasValues;
+}
+
+
 
 function electToPound(house) {
     var electValues = [];
