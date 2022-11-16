@@ -11,7 +11,10 @@ const pieIds = {
 }
 
 document.getElementById(getMonthID(graphPeriod.from) + "From").selected = "selected";
+document.getElementById(getYearFromISO(graphPeriod.from) + "From").selected = "selected";
+
 document.getElementById(getMonthID(graphPeriod.to) + "To").selected = "selected";
+document.getElementById(getYearFromISO(graphPeriod.to) + "To").selected = "selected";
 
 var responses = 0;
 

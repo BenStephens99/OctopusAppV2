@@ -78,6 +78,8 @@ function addNewHouse() {
     let mprn = document.forms["newHouseForm"]["mprn"].value;
     let gSerialNum = document.forms["newHouseForm"]["gSerialNum"].value;
 
+    postcode = postcode.replace(/\s+/g, '_');
+
     saveNewHouse(new House(
         postcode, address,
         FlexOctV2,

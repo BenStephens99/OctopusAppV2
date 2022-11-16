@@ -29,58 +29,108 @@ class House {
         let recievedElectData = false;
         let recievedGasData = false;
 
-        const urls = [
-            "https://api.octopus.energy/v1/gas-meter-points/" + this.mprn + "/meters/" + this.gSerialNum + "/consumption/",
-            "https://api.octopus.energy/v1/electricity-meter-points/" + this.mpan + "/meters/" + this.eSerialNum + "/consumption/"
-        ]
-
-        for (let i = 0; i < urls.length; i++) {
-            jq.ajax
-                ({
-
-                    type: "GET",
-                    url: urls[i],
-                    dataType: 'json',
-                    username: apiKey,
-                    password: ":",
-                    data: {
-                        period_from: period.from,
-                        period_to: period.to,
-                        group_by: period.group
-                    },
-                    success: function (res) {
-                        switch (i) {
-                            case 0:
-                                recievedGasData = true;
-                                house.gasData = house.checkMissingData(res.results);
-                                if (recievedElectData) {
-                                    returnData(house);
-                                    return;
-                                } else {
-                                    break;
+        const urls = {
+            gas: "https://api.octopus.energy/v1/gas-meter-points/" + this.mprn + "/meters/" + this.gSerialNum + "/consumption/",
+            electric: "https://api.octopus.energy/v1/electricity-meter-points/" + this.mpan + "/meters/" + this.eSerialNum + "/consumption/"
+        }
+        for (let i = 0; i < 2; i++) {
+            console.log("here")
+            switch (i) {
+                case 0:
+                    if (this.mprn != '') {
+                        jq.ajax
+                            ({
+                                type: "GET",
+                                url: urls.gas,
+                                dataType: 'json',
+                                username: apiKey,
+                                password: ":",
+                                data: {
+                                    period_from: period.from,
+                                    period_to: period.to,
+                                    group_by: period.group
+                                },
+                                success: function (res) {
+                                    recievedGasData = true;
+                                    house.gasData = house.checkMissingData(res.results);
+                                    if (recievedElectData) {
+                                        returnData(house);
+                                        return;
+                                    }
+                                },
+                                error: function (err) {
+                                    alert(house.address + ": Incorrect Gas Data")
+                                    recievedGasData = true;
+                                    house.gasData = house.checkMissingData([]);
+                                    if (recievedElectData) {
+                                        returnData(house);
+                                        return;
+                                    }
                                 }
-
-                            case 1:
-                                recievedElectData = true;
-                                house.electricData = house.checkMissingData(res.results);
-                                if (recievedGasData) {
-                                    returnData(house);
-                                    return;
-                                } else {
-                                    break;
-                                }
+                            });
+                        break;
+                    } else {
+                        recievedGasData = true;
+                        house.gasData = house.checkMissingData([]);
+                        if (recievedElectData) {
+                            returnData(house);
+                            return;
                         }
-                    },
-                    error: function(err) {
-                        console.log(err)
+                        break;
                     }
-                });
+                    case 1:
+                    if (this.mpan != '') {
+                        jq.ajax
+                            ({
+                                type: "GET",
+                                url: urls.electric,
+                                dataType: 'json',
+                                username: apiKey,
+                                password: ":",
+                                data: {
+                                    period_from: period.from,
+                                    period_to: period.to,
+                                    group_by: period.group
+                                },
+                                success: function (res) {
+                                    recievedElectData = true;
+                                    house.electricData = house.checkMissingData(res.results);
+                                    if (recievedGasData) {
+                                        returnData(house);
+                                        return;
+                                    }
+                                },
+                                error: function (err) {
+                                    alert(house.address + ": Incorrect Gas Data")
+                                    recievedElectData = true;
+                                    house.electricData = house.checkMissingData([]);
+                                    if (recievedGasData) {
+                                        returnData(house);
+                                        return;
+                                    }
+                                }
+                            });
+                        break;
+                    } else {
+                        recievedElectData = true;
+                        house.electricData = house.checkMissingData([]);
+                        if (recievedGasData) {
+                            returnData(house);
+                            return;
+                        }
+                        break;
+                    }
+            }
         }
 
     }
 
     checkMissingData(res) {
         var expectedData = 0;
+
+        if (res == null) {
+            res.push(new Data(0, firstDateOfMonth(this.dataPeriod.to), firstDateOfMonth(this.dataPeriod.to)))
+        }
 
         if (this.dataPeriod.to != null) {
             zeroAllDays(res)

@@ -1,6 +1,8 @@
 const fs = require("fs");
 const jq = require("jquery");
 
+
+
 const FlexOctV2 = {
     productCode: "AFFECT-OCC-VAR-21-10-01",
     tariffCodeE: "E-1R-AFFECT-OCC-VAR-21-10-01-J",
@@ -140,6 +142,6 @@ function getAllTariffDetails(tariff, dates) {
         tarrifDetails.electricStandingPrices.push(getStandingPriceElect(tariff, date))
         tarrifDetails.gasStandingPrices.push(getStandingPriceGas(tariff, date))
     });
-    
+
     return tarrifDetails;
 }
