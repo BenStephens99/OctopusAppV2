@@ -34,7 +34,6 @@ class House {
             electric: "https://api.octopus.energy/v1/electricity-meter-points/" + this.mpan + "/meters/" + this.eSerialNum + "/consumption/"
         }
         for (let i = 0; i < 2; i++) {
-            console.log("here")
             switch (i) {
                 case 0:
                     if (this.mprn != '') {
@@ -78,7 +77,7 @@ class House {
                         }
                         break;
                     }
-                    case 1:
+                case 1:
                     if (this.mpan != '') {
                         jq.ajax
                             ({
@@ -122,7 +121,6 @@ class House {
                     }
             }
         }
-
     }
 
     checkMissingData(res) {
