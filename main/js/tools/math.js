@@ -60,8 +60,6 @@ function electToPoundWithTarriffData(house, tariffData) {
     return electValues;
 }
 
-
-
 function gasToPoundWithTarriffData(house, tariffData) {
 
     var gasValues = [];
