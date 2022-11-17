@@ -344,6 +344,11 @@ function drawAllHousesGraph() {
                 data: gasValues,
             }]
         }, options: {
+            title: {
+                display: true,
+                text: 'All Houses',
+                fontSize: 20
+            },
             scales: {
                 xAxes: [{
                     stacked: true
@@ -400,7 +405,8 @@ function createPieChart(dataType) {
         options: {
             title: {
                 display: true,
-                text: capitaliseFirstLetter(dataType)
+                text: capitaliseFirstLetter(dataType),
+                fontSize: 16
             }
         }
     });
