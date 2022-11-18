@@ -7,9 +7,9 @@ const FlexOctV2 = {
     tariffCodeG: "G-1R-AFFECT-OCC-VAR-21-10-01-J",
 }
 
-const apiKey = fs.readFileSync('./apiKey.env', 'utf8')
+const apiKey = fs.readFileSync(__dirname + '\\apiKey.key', 'utf8');
 const allHouses = [];
-const houseDir = './houses/';
+const houseDir = __dirname + '\\houses\\';
 var h;
 const files = fs.readdirSync(houseDir);
 for (var i = 0; i < files.length; i++) {

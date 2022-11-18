@@ -1,5 +1,0 @@
-Speed up all houses graph rendering
-
-create 0 all values function
-
-Assign gas/electric dates to other if one is missing 

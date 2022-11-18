@@ -1,5 +1,6 @@
 node_modules
 
-apiKey.env
+apiKey.key
 
 houses
+out/

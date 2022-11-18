@@ -405,7 +405,7 @@ function createPieChart(dataType) {
         options: {
             title: {
                 display: true,
-                text: capitaliseFirstLetter(dataType),
+                text: "Total £ spend " + capitaliseFirstLetter(dataType),
                 fontSize: 16
             }
         }

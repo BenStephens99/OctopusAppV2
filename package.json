@@ -18,6 +18,7 @@
   "homepage": "https://github.com/BenStephens99/OctopusAppV2#readme",
   "dependencies": {
     "electron": "^21.2.1",
+    "fs": "^0.0.1-security",
     "jquery": "^3.6.1"
   }
 }

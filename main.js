@@ -10,10 +10,10 @@ function createWindow() {
       contextIsolation: false,
     },
     autoHideMenuBar: true,
-    icon: "./main/images/Cicon.ico"
+    icon: "./COApp/images/Cicon.ico"
   })
 
-  win.loadFile("./main/index.html")
+  win.loadFile("./COApp/index.html")
 }
 app.whenReady().then(() => {
   createWindow()
