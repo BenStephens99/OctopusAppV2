@@ -24,6 +24,8 @@ class House {
     }
 
     getData(period, returnData) {
+      
+
         this.dataPeriod = period;
         let house = this;
         let recievedElectData = false;

@@ -383,6 +383,7 @@ label#monthTo {
     width: 60px;
     height: 60px;
     animation: spin 2s linear infinite;
+    z-index: 1;
 }
 
 @keyframes spin {

@@ -50,6 +50,9 @@ function getUnitPriceElect(tariff, period) {
                 } else {
                     dataToReturn = res.results[0].value_exc_vat;
                 }
+            },
+            error: function() {
+                dataToReturn = 21;
             }
         })
     return dataToReturn / 100;
@@ -73,7 +76,9 @@ function getStandingPriceElect(tariff, period) {
                 } else {
                     dataToReturn = res.results[0].value_exc_vat;
                 }
-
+            },
+            error: function() {
+                dataToReturn = 23
             }
         })
     return dataToReturn / 100;
@@ -97,6 +102,9 @@ function getUnitPriceGas(tariff, period) {
                 } else {
                     dataToReturn = res.results[0].value_exc_vat;
                 }
+            },
+            error: function() {
+                dataToReturn = 4
             }
         })
     return dataToReturn / 100;
@@ -120,6 +128,9 @@ function getStandingPriceGas(tariff, period) {
                 } else {
                     dataToReturn = res.results[0].value_exc_vat;
                 }
+            },
+            error: function() {
+                dataToReturn = 25
             }
         })
     return dataToReturn / 100;

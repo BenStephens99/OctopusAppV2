@@ -9,7 +9,6 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
     },
-    autoHideMenuBar: true,
     icon: "./COApp/images/Cicon.ico"
   })
 
