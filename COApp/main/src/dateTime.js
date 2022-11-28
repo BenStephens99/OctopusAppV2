@@ -246,11 +246,11 @@ const pastYear = {
 }
 
 const lastYear = {
-    from: ,
+    from: getFirstDateLastYear(1),
     group: "month"
 }
 
 const yearToDate ={
-    from: ,
+    from: getFirstDateLastYear(0),
     group: "month"
 }
