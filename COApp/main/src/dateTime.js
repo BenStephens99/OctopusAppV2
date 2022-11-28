@@ -245,12 +245,3 @@ const pastYear = {
     group: "month",
 }
 
-const lastYear = {
-    from: getFirstDateLastYear(1),
-    group: "month"
-}
-
-const yearToDate ={
-    from: getFirstDateLastYear(0),
-    group: "month"
-}
