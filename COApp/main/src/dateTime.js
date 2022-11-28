@@ -244,3 +244,13 @@ const pastYear = {
     from: getFullDateLastYear(1),
     group: "month",
 }
+
+const lastYear = {
+    from: ,
+    group: "month"
+}
+
+const yearToDate ={
+    from: ,
+    group: "month"
+}

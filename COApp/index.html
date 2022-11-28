@@ -26,7 +26,7 @@
                     <div id="from">
                         <label for="monthFrom">From:</label>
                         <select name="monthFrom" id="monthFrom">
-                            <option id="jan0From"  value="0">January</option>
+                            <option id="jan0From" value="0">January</option>
                             <option id="feb1From" value="1">February</option>
                             <option id="mar2From" value="2">March</option>
                             <option id="apr3From" value="3">April</option>
@@ -49,7 +49,7 @@
                     <div id="to">
                         <label id="monthTo" for="monthTo">To:</label>
                         <select name="monthTo" id="monthTo">
-                            <option id="jan0To"  value="0">January</option>
+                            <option id="jan0To" value="0">January</option>
                             <option id="feb1To" value="1">February</option>
                             <option id="mar2To" value="2">March</option>
                             <option id="apr3To" value="3">April</option>
@@ -81,12 +81,41 @@
             </div>
 
             <div class="pieChartHolder">
+                <h3>Electric</h3>
                 <canvas id="electricPieChart"></canvas>
             </div>
-            
+
             <div class="pieChartHolder">
+                <h3>Gas</h3>
                 <canvas id="gasPieChart"></canvas>
-            </div> 
+            </div>
+
+            <div class="tableHolderLarge">
+                <h3>Combined</h3>
+                <table id="combinedTable">
+              
+                </table>
+            </div>
+
+            <div class="tableHolder">
+                <h3>Electric</h3>
+                <table id="electricTable">
+                    <tr>
+                        <th>House</th>
+                        <th>Electric Used</th>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="tableHolder">
+                <h3>Gas</h3>
+                <table id="gasTable">
+                    <tr>
+                        <th>House</th>
+                        <th>Gas Used</th>
+                    </tr>
+                </table>
+            </div>
         </div>
 
 

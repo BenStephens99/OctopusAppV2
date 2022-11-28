@@ -1,7 +1,3 @@
-function addGraphDiv(id) {
-    document.getElementById('graphs').innerHTML += '<div class="graphContainer"> <canvas id="' + id + '"></canvas> </div>'
-}
-
 Chart.defaults.global.defaultFontColor = "#fff";
 
 const electBackgroudColor = "rgba(41, 255, 45, 0.4)";
@@ -12,6 +8,7 @@ const gasBorderColor = "rgba(39, 140, 255, 1)";
 
 const barColors = [
     '#1197F0',
+    '#00F0DD',
     '#0CF7F7',
     '#00E07F',
     '#0CF72C',
@@ -28,9 +25,27 @@ const barColors = [
     '#4700F0',
     '#1152FA',
     '#0B96D9',
-    '#00F0DD',
 ]
 
+class GraphPair {
+    constructor(name, data) {
+        this.name = name;
+        this.data = data;
+    }
+}
+
+class TableTriple {
+    constructor(name, elect, gas) {
+        this.name = name;
+        this.elect = elect;
+        this.gas = gas;
+        this.total = roundNumber(elect + gas);
+    }
+}
+
+function addGraphDiv(id) {
+    document.getElementById('graphs').innerHTML += '<div class="graphContainer"> <canvas id="' + id + '"></canvas> </div>'
+}
 function createGasAndElectGraph(house) {
     console.log(house)
     let electricValues;
@@ -70,7 +85,7 @@ function createGasAndElectGraph(house) {
         console.log("Gas data not available")
     }
 
-    dateTimeValues = formatDateTimeLables(dateTimeValues, house.dataPeriod.group);
+    dateTimeValues = new formatDateTimeLables(dateTimeValues, house.dataPeriod.group);
     dateTimeValues.reverse();
 
     new Chart(house.postcode, {
@@ -106,9 +121,9 @@ function createGasAndElectGraph(house) {
                     },
                     ticks: {
                         beginAtZero: true,
-                        callback: function(val, index) {
+                        callback: function (val, index) {
                             return '£' + val;
-                          },
+                        },
                     }
                 }],
                 xAxes: [{
@@ -180,7 +195,7 @@ function createTariffGraph(house) {
         }
     }
 
-    dateTimeValues = formatDateTimeLables(dateTimeValues, house.dataPeriod.group);
+    dateTimeValues = new formatDateTimeLables(dateTimeValues, house.dataPeriod.group);
 
     dateTimeValues.reverse();
     electTariffUnits.reverse();
@@ -238,9 +253,9 @@ function createTariffGraph(house) {
                     },
                     ticks: {
                         beginAtZero: true,
-                        callback: function(val, index) {
+                        callback: function (val, index) {
                             return '£' + val;
-                          },
+                        },
                     }
                 }],
                 xAxes: [{
@@ -356,11 +371,11 @@ function drawAllHousesGraph() {
                 yAxes: [{
                     stacked: true,
                     ticks: {
-                        callback: function(val, index) {
-                        return '£' + val;
-                      },
+                        callback: function (val, index) {
+                            return '£' + val;
+                        },
                     }
-                    
+
                 }]
             },
             tooltips: {
@@ -376,22 +391,39 @@ function drawAllHousesGraph() {
 
 }
 
-function createPieChart(dataType) {
+function createPieChart(dataType, data) {
+
+    let graphPairs = [];
+
+    if (dataType === "gas") {
+        data.forEach(d => {
+            graphPairs.push(new GraphPair(d.name, d.gas));
+        });
+    } else if (dataType === "electric") {
+        data.forEach(d => {
+            graphPairs.push(new GraphPair(d.name, d.elect));
+        });
+    }
+
+    function compare(a, b) {
+        if (a.data < b.data) {
+            return 1;
+        }
+        if (a.data > b.data) {
+            return -1;
+        }
+        return 0;
+    }
+    graphPairs.sort(compare);
 
     let houseNames = [];
     let graphValues = [];
 
-    if (dataType === "gas") {
-        allHouses.forEach(house => {
-            houseNames.push(house.address)
-            graphValues.push(addAllValues(gasToPound(house)))
-        });
-    } else if (dataType === "electric") {
-        allHouses.forEach(house => {
-            houseNames.push(house.address)
-            graphValues.push(addAllValues(electToPound(house)))
-        });
-    }
+    graphPairs.forEach(pair => {
+        houseNames.push(pair.name)
+        graphValues.push(pair.data)
+    });
+
 
     new Chart(dataType + "PieChart", {
         type: "pie",
@@ -410,25 +442,109 @@ function createPieChart(dataType) {
             }
         }
     });
+
+    createTable(dataType, houseNames, graphValues)
 }
 
-function formatDateTimeLables(dateTimeValues, periodGroup) {
-    let returnValues = [];
-    this.formatter = function (value) {
-        if (periodGroup === "hour") {
-            return nameOfTime(getTimeFromISO(value));
-        } else if (periodGroup === "day") {
-            return getDayFromISO(value) + "/" + getMonthFromISO(value);
-        } else if (periodGroup === "month") {
-            return nameOfMonth(getMonthFromISO(value)) + " " + getYearFromISO(value);
+function createTable(dataType, houseNames, graphValues) {
+
+    let id;
+
+    if (dataType === "gas") {
+        id = "gasTable"
+    } else if (dataType === "electric") {
+        id = "electricTable"
+    }
+
+    let table = document.getElementById(id);
+
+    table.innerHTML = '<tr><th class="bold">House</th><th class="bold">' + capitaliseFirstLetter(dataType) + ' Used</th></tr>';
+
+    for (var i = 0; i < houseNames.length; i++) {
+        if (graphValues[i] != 0) {
+            table.innerHTML += '<tr><th>' + houseNames[i] + '</th><th class="price">£' + numberWithCommas(graphValues[i]) + '</th></tr>';
         }
     }
-    for (let i = 0; i < dateTimeValues.length; i++) {
-        returnValues.push(this.formatter(dateTimeValues[i]));
+
+    table.innerHTML += '<tr><th class="bold">' + "Total" + '</th><th class="bold">£' + numberWithCommas(addAllValues(graphValues)) + '</th></tr>';
+}
+
+function createCombinedTable() {
+
+    let tableData = [];
+
+    allHouses.forEach(house => {
+        tableData.push(new TableTriple(house.address, addAllValues(electToPound(house)), addAllValues(gasToPound(house))));
+    });
+
+    console.log(tableData);
+
+    createPieChart("gas", tableData);
+    createPieChart("electric", tableData);
+
+    
+    function compare(a, b) {
+        if (a.total < b.total) {
+            return 1;
+        }
+        if (a.total > b.total) {
+            return -1;
+        }
+        return 0;
     }
-    return returnValues;
+    tableData.sort(compare);
+    
+    let table = document.getElementById("combinedTable");
+
+    table.innerHTML = '<tr><th class="bold">House</th><th class="bold">Electric Used</th><th class="bold">Gas Used</th><th class="bold">Total</th></tr>';
+
+    var totals = [];
+
+    tableData.forEach(data => {
+        totals.push(data.total);
+        table.innerHTML += 
+        '<tr>'+
+            '<th>' + data.name + '</th>'+
+            '<th>£' + numberWithCommas(data.elect) + '</th>' +
+            '<th>£' + numberWithCommas(data.gas) + '</th>' +
+            '<th>£' + numberWithCommas(data.total) + '</th>' + 
+        '</tr>';
+    });
+
+    table.innerHTML += 
+        '<tr>'+
+            '<th class="bold">' + "Total" + '</th>'+
+            '<th></th>' +
+            '<th></th>' +
+            '<th class="bold">£' + numberWithCommas(addAllValues(totals)) + '</th>' + 
+        '</tr>';
+
+    
+}
+
+class formatDateTimeLables {
+    constructor(dateTimeValues, periodGroup) {
+        let returnValues = [];
+        this.formatter = function (value) {
+            if (periodGroup === "hour") {
+                return nameOfTime(getTimeFromISO(value));
+            } else if (periodGroup === "day") {
+                return getDayFromISO(value) + "/" + getMonthFromISO(value);
+            } else if (periodGroup === "month") {
+                return nameOfMonth(getMonthFromISO(value)) + " " + getYearFromISO(value);
+            }
+        };
+        for (let i = 0; i < dateTimeValues.length; i++) {
+            returnValues.push(this.formatter(dateTimeValues[i]));
+        }
+        return returnValues;
+    }
 }
 
 function capitaliseFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

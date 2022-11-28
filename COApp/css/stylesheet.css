@@ -396,22 +396,52 @@ label#monthTo {
     }
 }
 
-.pieChartHolder {
+.pieChartHolder, .tableHolder {
     width: 48%;
+    margin: 0.5em auto;
+    background-color: rgb(95, 95, 95);
+    box-shadow: 0 0 10px rgb(44, 44, 44);
+    border-radius: 1em;
+    padding-bottom: 1em;
+    text-align: center;
+}
+
+.tableHolderLarge {
+    width: 98%;
+    margin: 0.5em auto;
+    background-color: rgb(95, 95, 95);
+    box-shadow: 0 0 10px rgb(44, 44, 44);
+    border-radius: 1em;
+    padding-bottom: 1em;
+    text-align: center;
+}
+
+
+.pieChartHolder canvas {
+    width: 100%;
+}
+
+table {
+    text-align: left;
+    width: 95%;
     margin: auto;
 }
 
-.pieChartHolder canvas {  
-    border-radius: 1em;
-    padding-bottom: 1em;
-    background-color: rgb(95, 95, 95);
-    box-shadow: 0 0 10px rgb(44, 44, 44);
+td, th {
+    border: 1px solid #262626;
+    text-align: left;
+    padding: 8px;
+    background-color: #4d4d4d;
+    font-weight: 150;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 @media screen and (max-width: 1500px) {
-    .pieChartHolder {
+    .pieChartHolder, .tableHolder {
         width: 96%;
-        margin-top: 1em;;
     }
     
     #allHouseUsageHolder {

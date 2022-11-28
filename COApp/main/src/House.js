@@ -220,9 +220,11 @@ class House {
     }
 }
 
-function Data(consumption, interval_start, interval_end) {
-    this.consumption = consumption;
-    this.interval_start = interval_start;
-    this.interval_end = interval_end;
+class Data {
+    constructor(consumption, interval_start, interval_end) {
+        this.consumption = consumption;
+        this.interval_start = interval_start;
+        this.interval_end = interval_end;
+    }
 }
 
