@@ -1,5 +1,5 @@
 var currentProperty = '';
-var period = pastYear;
+var period = past12Months;
 var pageHeader = document.getElementById('pageHeader')
 var scaleTitle = document.getElementById('scaleTitle')
 var responses = 0;

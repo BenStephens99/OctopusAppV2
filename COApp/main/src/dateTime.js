@@ -65,16 +65,24 @@ function getFirstDateLastYear(num) {
     date.setFullYear(date.getFullYear() - num)
     return convertToISO(date);
 }
+
+function getLastDateLastYear(num) {
+    date = new Date();
+    date.setMonth(11);
+    date.setDate(31);
+    date.setFullYear(date.getFullYear() - num)
+    return convertToISO(date);
+}
+
 function getPreviousMonth(prevDate) {
     date = new Date();
     date.setDate(getDayFromISO(prevDate));
     date.setMonth(getMonthFromISO(prevDate));
     date.setFullYear(getYearFromISO(prevDate));
-
     date.setMonth(date.getMonth() - 1);
-
     return convertToISO(date).slice(0, 7);
 }
+
 function getDaysSince(date) {
     todaysDate = new Date();
     dateSince = new Date();
@@ -83,6 +91,7 @@ function getDaysSince(date) {
     dateSince.setFullYear(getYearFromISO(date));
     return Math.round(Math.abs((dateSince - todaysDate) / oneDay) + 1);;
 }
+
 function getMonthsSince(date) {
     todaysDate = new Date();
     dateSince = new Date();
@@ -228,8 +237,19 @@ const past7Days = {
     from: getFullDateLastWeek(1),
     group: "day",
 }
+const thisWeek = {
+    from: getFullDateYesterday(8),
+    to: getFullDateYesterday(1),
+    group: "day"
+}
 const thisMonth = {
     from: getFirstDateLastMonth(0),
+    group: "day",
+}
+
+const monthTD = {
+    from: getFirstDateLastMonth(0),
+    to: getFullDateYesterday(1),
     group: "day",
 }
 const past8Weeks = {
@@ -240,8 +260,17 @@ const past6Months = {
     from: getFirstDateLastMonth(6),
     group: "month",
 }
-const pastYear = {
+const past12Months = {
     from: getFullDateLastYear(1),
     group: "month",
 }
-
+const lastYear = {
+    from: getFirstDateLastYear(1),
+    to: getLastDateLastYear(1),
+    group: "month"
+}
+const thisYear = {
+    from: getFirstDateLastYear(0),
+    to: getFullDateYesterday(1),
+    group: "month"
+}

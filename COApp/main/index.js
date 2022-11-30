@@ -1,4 +1,3 @@
-const baseDir = "https://s3.eu-west-2.amazonaws.com/octopusapp.bs/"
 var graphPeriod = {
     group: "month",
     from: getFirstDateLastMonth(6),
@@ -34,6 +33,17 @@ function updateAllHousesGraph() {
     graphPeriod.to = (getNextDay(monthYearToISOTo(monthTo, yearTo)))
     drawGraphs();
 }
+
+function setPeriod(period) {
+    console.log(period)
+    document.getElementById(getMonthID(period.from) + "From").selected = "selected";
+    document.getElementById(getYearFromISO(period.from) + "From").selected = "selected";
+
+    document.getElementById(getMonthID(period.to) + "To").selected = "selected";
+    document.getElementById(getYearFromISO(period.to) + "To").selected = "selected";
+    updateAllHousesGraph();
+}
+
 
 function drawGraphs() {
     document.getElementById("loading").style.display = "block";

@@ -24,8 +24,7 @@ class House {
     }
 
     getData(period, returnData) {
-      
-
+    
         this.dataPeriod = period;
         let house = this;
         let recievedElectData = false;
@@ -148,7 +147,6 @@ class House {
                 return res;
             }
         }
-
         if (res.length === expectedData) {
             return res;
         } else {

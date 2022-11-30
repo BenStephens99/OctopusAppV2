@@ -30,7 +30,9 @@
 
         <ul id="scaleButtons">
             <li><button id="dayButton" onclick="changePeriod(past7Days, dayButton)">Past 7 days</button></li>
-            <li><button id="yearButton" class="selectedButton" onclick="changePeriod(pastYear, yearButton)">Last 12 Months</button></li>
+            <li><button id="thisMonthButton" onclick="changePeriod(thisMonth, thisMonthButton)">This Month</button></li>
+            <li><button id="thisYearButton" class="selectedButton" onclick="changePeriod(thisYear, thisYearButton)">This Year</button></li>
+            <li><button id="lastYearButton" onclick="changePeriod(lastYear, lastYearButton)">Last Year</button></li>
         </ul>
 
         <form id="newHouseForm" name="newHouseForm" onsubmit="addNewHouse()">

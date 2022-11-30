@@ -282,7 +282,6 @@ input {
 }
 
 #scaleButtons {
-    width: 100%;
     margin: auto;
     padding: 0;
     padding-top: 1em;
@@ -306,10 +305,36 @@ input {
     font-size: 0.8em;
     box-shadow: 0 0 10px rgb(44, 44, 44);
 }
-
 #scaleButtons button:hover {
     cursor: pointer;
     box-shadow: 0 0 20px rgb(44, 44, 44);
+}
+#scaleButtonsBlock {
+    margin: 0 ;
+    padding: 0;
+    padding-bottom: 1em;
+    text-align: center;
+}
+
+#scaleButtonsBlock li {
+    display: block;
+    margin: 1em;
+}
+
+#scaleButtonsBlock button {
+    padding: 1em 0;
+    background-color: rgb(67, 66, 66);
+    color: inherit;
+    border: 1px solid rgb(67, 66, 66);
+    border-radius: 1em;
+    font-size: 0.8em;
+    width: 150px;
+
+}
+
+#scaleButtonsBlock button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px rgb(193, 193, 193);
 }
 
 #scaleButtons .selectedButton {
@@ -329,7 +354,8 @@ input {
 }
 
 #allHouseUsageHolder {
-    width: 70%;
+    width: 90%;
+    max-width: 1500px;
     margin: auto;
 }
 
@@ -448,3 +474,6 @@ td, th {
         width: 100%;
     }
 }
+
+
+
