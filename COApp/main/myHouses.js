@@ -77,7 +77,7 @@ function addNewHouse() {
     let mprn = document.forms["newHouseForm"]["mprn"].value;
     let gSerialNum = document.forms["newHouseForm"]["gSerialNum"].value;
 
-    if (flatNum !== '' || flatNum != null) {
+    if (flatNum !== "") {
         address = address + ", Flat " + flatNum;
         postcode = postcode + " F" + flatNum;
     }
