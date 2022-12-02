@@ -21,7 +21,7 @@ jq("#calendar").submit(function (e) {
     e.preventDefault();
 });
 
-updateAllHousesGraph()
+updateAllHousesGraph();
 
 function updateAllHousesGraph() {
     let monthFrom = document.forms["calendar"]["monthFrom"].value;
@@ -35,7 +35,6 @@ function updateAllHousesGraph() {
 }
 
 function setPeriod(period) {
-    console.log(period)
     document.getElementById(getMonthID(period.from) + "From").selected = "selected";
     document.getElementById(getYearFromISO(period.from) + "From").selected = "selected";
 
@@ -43,7 +42,6 @@ function setPeriod(period) {
     document.getElementById(getYearFromISO(period.to) + "To").selected = "selected";
     updateAllHousesGraph();
 }
-
 
 function drawGraphs() {
     document.getElementById("loading").style.display = "block";

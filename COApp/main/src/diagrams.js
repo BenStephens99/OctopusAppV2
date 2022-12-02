@@ -477,8 +477,6 @@ function createCombinedTable() {
         tableData.push(new TableTriple(house.address, addAllValues(electToPound(house)), addAllValues(gasToPound(house))));
     });
 
-    console.log(tableData);
-
     createPieChart("gas", tableData);
     createPieChart("electric", tableData);
 

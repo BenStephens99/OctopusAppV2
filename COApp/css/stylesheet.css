@@ -314,11 +314,18 @@ input {
     padding: 0;
     padding-bottom: 1em;
     text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    width: 350px;
+    height: auto;
+    margin: auto 0;
+
 }
 
 #scaleButtonsBlock li {
-    display: block;
-    margin: 1em;
+    list-style: none;
+    margin: 10px;
+    height: 50px;
 }
 
 #scaleButtonsBlock button {
