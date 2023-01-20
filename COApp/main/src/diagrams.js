@@ -269,7 +269,7 @@ function createTariffGraph(house) {
             },
             title: {
                 display: true,
-                text: 'This Tariff (' + house.tariff.productCode + ')',
+                text: 'This Tariff',
                 fontSize: 16
             },
             tooltips: {

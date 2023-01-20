@@ -9,7 +9,8 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
     },
-    icon: "./COApp/images/Cicon.ico"
+    autoHideMenuBar: true 
+    //icon: "./COApp/images/Cicon.ico"
   })
 
   win.loadFile("./COApp/index.html")
